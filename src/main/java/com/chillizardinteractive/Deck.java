@@ -7,15 +7,27 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class Deck {
+public abstract class Deck {
     protected List<Card> deck;
 
     public Deck() {
         deck = new ArrayList<>();
+        initializeDeck();
     }
 
-    public void loadDeck(String filePath, String deckName) {
+    protected abstract void initializeDeck();
+
+    public void showDeck() {
+        System.out.println("Deck:");
+        for (Card card : deck) {
+            System.out.println("- " + card.getDescription());
+        }
+    }
+
+    public static Deck loadDeck(String filePath, String deckName) {
         JSONParser parser = new JSONParser();
+        Deck loadedDeck = new CustomDeck(); // Usar una implementación concreta de Deck
+
         try (FileReader reader = new FileReader(filePath)) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             JSONObject decks = (JSONObject) jsonObject.get("decks");
@@ -25,22 +37,24 @@ public class Deck {
             List<Card> spells = loadSpells((JSONArray) deckJson.get("spells"));
             List<Card> weapons = loadWeapons((JSONArray) deckJson.get("weapons"));
 
-            deck.addAll(minions);
-            deck.addAll(spells);
-            deck.addAll(weapons);
+            loadedDeck.deck.addAll(minions);
+            loadedDeck.deck.addAll(spells);
+            loadedDeck.deck.addAll(weapons);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return loadedDeck;
     }
 
-    private List<Card> loadMinions(JSONArray minionsArray) {
+    private static List<Card> loadMinions(JSONArray minionsArray) {
         List<Card> minions = new ArrayList<>();
         for (Object obj : minionsArray) {
             JSONObject minionJson = (JSONObject) obj;
             String name = (String) minionJson.get("name");
             int attack = ((Long) minionJson.get("attack")).intValue();
             int defense = ((Long) minionJson.get("defense")).intValue();
-            int nenCost = minionJson.containsKey("cost") ? ((Long) minionJson.get("cost")).intValue() : 0;
+            int nenCost = ((Long) minionJson.get("cost")).intValue();
             String rarity = (String) minionJson.get("rarity");
             BasicMinionCard minion = new BasicMinionCard(attack, defense, nenCost, name, Rarity.valueOf(rarity));
             minions.add(minion);
@@ -48,21 +62,22 @@ public class Deck {
         return minions;
     }
 
-    private List<Card> loadSpells(JSONArray spellsArray) {
+    private static List<Card> loadSpells(JSONArray spellsArray) {
         List<Card> spells = new ArrayList<>();
         for (Object obj : spellsArray) {
             JSONObject spellJson = (JSONObject) obj;
             String name = (String) spellJson.get("name");
             int nenCost = ((Long) spellJson.get("nenCost")).intValue();
             String description = (String) spellJson.get("description");
+            String effect = (String) spellJson.get("effect");
             String rarity = (String) spellJson.get("rarity");
-            SpellCard spell = new SpellCard(nenCost, description, Rarity.valueOf(rarity));
+            SpellCard spell = new SpellCard(nenCost, description, effect, Rarity.valueOf(rarity));
             spells.add(spell);
         }
         return spells;
     }
 
-    private List<Card> loadWeapons(JSONArray weaponsArray) {
+    private static List<Card> loadWeapons(JSONArray weaponsArray) {
         List<Card> weapons = new ArrayList<>();
         for (Object obj : weaponsArray) {
             JSONObject weaponJson = (JSONObject) obj;
@@ -75,12 +90,5 @@ public class Deck {
             weapons.add(weapon);
         }
         return weapons;
-    }
-
-    public void showDeck() {
-        System.out.println("Deck:");
-        for (Card card : deck) {
-            System.out.println("- " + card.getDescription());
-        }
     }
 }

@@ -1,42 +1,21 @@
 package com.chillizardinteractive;
 
-public class BattlecryDecorator implements Minion {
-    private final Minion decoratedMinion;
+public class BattlecryDecorator extends CardDecorator {
     private final String battlecryEffect;
 
-    public BattlecryDecorator(Minion minion, String effect) {
-        this.decoratedMinion = minion;
+    public BattlecryDecorator(Card card, String effect) {
+        super(card);
         this.battlecryEffect = effect;
     }
 
     @Override
-    public int getNenCost() {
-        return decoratedMinion.getNenCost();
-    }
-
-    @Override
     public String getDescription() {
-        return decoratedMinion.getDescription() + " (Battlecry)";
-    }
-
-    @Override
-    public Rarity getRarity() {
-        return decoratedMinion.getRarity();
-    }
-
-    @Override
-    public int getAttack() {
-        return decoratedMinion.getAttack();
-    }
-
-    @Override
-    public int getDefense() {
-        return decoratedMinion.getDefense();
+        return decoratedCard.getDescription() + " (Battlecry)";
     }
 
     @Override
     public void playEffect() {
         System.out.println("Grito de Batalla: " + battlecryEffect);
-        decoratedMinion.playEffect();
+        decoratedCard.playEffect();
     }
 }

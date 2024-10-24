@@ -1,40 +1,18 @@
 package com.chillizardinteractive;
 
-public class ChargeDecorator implements Minion {
-    private final Minion decoratedMinion;
-
-    public ChargeDecorator(Minion minion) {
-        this.decoratedMinion = minion;
-    }
-
-    @Override
-    public int getNenCost() {
-        return decoratedMinion.getNenCost();
+public class ChargeDecorator extends CardDecorator {
+    public ChargeDecorator(Card card) {
+        super(card);
     }
 
     @Override
     public String getDescription() {
-        return decoratedMinion.getDescription() + " (Charge)";
-    }
-
-    @Override
-    public Rarity getRarity() {
-        return decoratedMinion.getRarity();
-    }
-
-    @Override
-    public int getAttack() {
-        return decoratedMinion.getAttack();
-    }
-
-    @Override
-    public int getDefense() {
-        return decoratedMinion.getDefense();
+        return decoratedCard.getDescription() + " (Charge)";
     }
 
     @Override
     public void playEffect() {
-        decoratedMinion.playEffect();
+        decoratedCard.playEffect();
         System.out.println("Este minion puede atacar inmediatamente.");
     }
 }

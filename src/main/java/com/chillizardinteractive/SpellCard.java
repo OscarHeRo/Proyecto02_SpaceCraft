@@ -1,33 +1,15 @@
 package com.chillizardinteractive;
 
-public class SpellCard implements Card {
-    private final int nenCost;
-    private final String description;
-    private final Rarity rarity;
+public class SpellCard extends Card {
+    private final String effect;
 
-    public SpellCard(int nenCost, String description, Rarity rarity) {
-        this.nenCost = nenCost;
-        this.description = description;
-        this.rarity = rarity;
-    }
-
-    @Override
-    public int getNenCost() {
-        return nenCost;
-    }
-
-    @Override
-    public String getDescription() {
-        return "Hechizo: " + description;
-    }
-
-    @Override
-    public Rarity getRarity() {
-        return rarity;
+    public SpellCard(int nenCost, String description, String effect, Rarity rarity) {
+        super(description, nenCost, rarity);
+        this.effect = effect;
     }
 
     @Override
     public void playEffect() {
-        System.out.println(getDescription() + " se ha activado.");
+        System.out.println(getDescription() + ": " + effect);
     }
 }
