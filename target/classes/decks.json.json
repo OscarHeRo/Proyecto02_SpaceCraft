@@ -1,0 +1,92 @@
+{
+    "GON": {
+      "minions": [
+        { "name": "Killua", "attack": 5, "defense": 3, "rarity": "RARE", "charge": true },
+        { "name": "Leorio", "attack": 2, "defense": 5, "rarity": "COMMON" }
+      ],
+      "spells": [
+        { "name": "Fishing Rod", "nenCost": 1, "description": "Roba una carta", "rarity": "COMMON" }
+      ],
+      "weapons": []
+    },
+    "KURAPIKA": {
+      "minions": [
+        { "name": "Clan Kurta Member", "attack": 3, "defense": 4, "rarity": "RARE", "battlecry": "Mejora +1/+1" }
+      ],
+      "spells": [],
+      "weapons": []
+    },
+    "KURORO": {
+      "minions": [
+        {
+          "name": "Uvogin",
+          "attack": 8,
+          "defense": 8,
+          "cost": 8,
+          "rarity": "EPIC",
+          "effects": ["Overkill: Inflige el exceso de daño al héroe enemigo."]
+        },
+        {
+          "name": "Phinks",
+          "attack": 5,
+          "defense": 7,
+          "cost": 6,
+          "rarity": "RARE",
+          "effects": ["Wind-Up: Cada turno aumenta su ataque +1."]
+        },
+        {
+          "name": "Franklin",
+          "attack": 6,
+          "defense": 5,
+          "cost": 6,
+          "rarity": "RARE",
+          "effects": ["Battlecry: Inflige 3 de daño a todos los esbirros enemigos."]
+        },
+        {
+          "name": "Feitan",
+          "attack": 4,
+          "defense": 4,
+          "cost": 5,
+          "rarity": "EPIC",
+          "effects": ["Retribution: Inflige tanto daño al enemigo como haya recibido."]
+        }
+      ],
+      "spells": [
+        {
+          "name": "Machi's Threads",
+          "cost": 3,
+          "rarity": "COMMON",
+          "description": "Recupera 5 puntos de salud a un esbirro aliado."
+        },
+        {
+          "name": "Shizuku's Vacuum",
+          "cost": 4,
+          "rarity": "RARE",
+          "description": "Roba 2 cartas del mazo enemigo."
+        },
+        {
+          "name": "Kortopi's Clone",
+          "cost": 5,
+          "rarity": "EPIC",
+          "description": "Clona un esbirro aliado y le da Rush."
+        },
+        {
+          "name": "Shalnark's Command",
+          "cost": 3,
+          "rarity": "RARE",
+          "description": "Otorga Taunt a los esbirros adyacentes."
+        }
+      ],
+      "weapons": [
+        {
+          "name": "Judgment Book",
+          "attack": 3,
+          "durability": 3,
+          "cost": 5,
+          "rarity": "LEGENDARY",
+          "effects": ["Cada vez que un esbirro aliado ataque, roba 1 carta."]
+        }
+      ]
+    }
+  }
+  
