@@ -6,28 +6,17 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-public abstract class Deck {
+public class Deck {
     protected List<Card> deck;
 
     public Deck() {
         deck = new ArrayList<>();
-        initializeDeck();
     }
 
-    protected abstract void initializeDeck();
-
-    public void showDeck() {
-        System.out.println("Deck:");
-        for (Card card : deck) {
-            System.out.println("- " + card.getDescription());
-        }
-    }
-
-    public static Deck loadDeck(String filePath, String deckName) {
+    protected void initializeDeck(String filePath, String deckName) {
         JSONParser parser = new JSONParser();
-        Deck loadedDeck = new CustomDeck(); // Usar una implementación concreta de Deck
-
         try (FileReader reader = new FileReader(filePath)) {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             JSONObject decks = (JSONObject) jsonObject.get("decks");
@@ -37,17 +26,15 @@ public abstract class Deck {
             List<Card> spells = loadSpells((JSONArray) deckJson.get("spells"));
             List<Card> weapons = loadWeapons((JSONArray) deckJson.get("weapons"));
 
-            loadedDeck.deck.addAll(minions);
-            loadedDeck.deck.addAll(spells);
-            loadedDeck.deck.addAll(weapons);
+            deck.addAll(minions);
+            deck.addAll(spells);
+            deck.addAll(weapons);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        return loadedDeck;
     }
 
-    private static List<Card> loadMinions(JSONArray minionsArray) {
+    private List<Card> loadMinions(JSONArray minionsArray) {
         List<Card> minions = new ArrayList<>();
         for (Object obj : minionsArray) {
             JSONObject minionJson = (JSONObject) obj;
@@ -62,7 +49,7 @@ public abstract class Deck {
         return minions;
     }
 
-    private static List<Card> loadSpells(JSONArray spellsArray) {
+    private List<Card> loadSpells(JSONArray spellsArray) {
         List<Card> spells = new ArrayList<>();
         for (Object obj : spellsArray) {
             JSONObject spellJson = (JSONObject) obj;
@@ -77,7 +64,7 @@ public abstract class Deck {
         return spells;
     }
 
-    private static List<Card> loadWeapons(JSONArray weaponsArray) {
+    private List<Card> loadWeapons(JSONArray weaponsArray) {
         List<Card> weapons = new ArrayList<>();
         for (Object obj : weaponsArray) {
             JSONObject weaponJson = (JSONObject) obj;
@@ -90,5 +77,12 @@ public abstract class Deck {
             weapons.add(weapon);
         }
         return weapons;
+    }
+
+    public void showDeck() {
+        System.out.println("Deck:");
+        for (Card card : deck) {
+            System.out.println("- " + card.getDescription());
+        }
     }
 }
