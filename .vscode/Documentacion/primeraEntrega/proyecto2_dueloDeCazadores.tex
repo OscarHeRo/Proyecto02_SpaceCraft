@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\usepackage{geometry}
+\geometry{a4paper, margin=1in}
+
+\title{
+    \textbf{Proyecto 2: Juego de Cartas Online \\
+    Inspirado en Hearthstone} \\
+    \large Modelado y Programación
+}
+\author{
+    Emilio Durán Tapia, 320301867 \\ 
+    Oscar David Hernández Rodríguez, 420002945
+}
+\date{Ciudad de México, 2024}
+
+\begin{document}
+
+\maketitle
+
+\section*{Problemática}
+Los juegos de cartas en línea han ganado popularidad debido a su capacidad para ofrecer experiencias estratégicas profundas y emocionantes. Sin embargo, implementar estas mecánicas presenta retos técnicos como la gestión de estados complejos y la sincronización en tiempo real. Además, es fundamental equilibrar las interacciones entre las cartas para garantizar una experiencia justa y divertida. \\
+
+\textbf{Objetivo}: Diseñar e implementar un juego de cartas inspirado en Hearthstone, donde dos jugadores compitan utilizando cartas que representan criaturas, hechizos y trampas. Se busca integrar una arquitectura modular y escalable que permita la adición de nuevas mecánicas sin afectar el núcleo del sistema. La comunicación entre los jugadores se realizará mediante \textbf{websockets}, asegurando un entorno fluido y en tiempo real.
+
+\section*{Alcance del Proyecto}
+El sistema permitirá:
+\begin{itemize}
+    \item Crear cartas predefinidas como criaturas, hechizos y trampas mediante los patrones \textbf{Abstract Factory} y \textbf{Builder}.
+    \item Administrar partidas en tiempo real utilizando \textbf{websockets} para la comunicación entre jugadores.
+    \item Definir un sistema de turnos claro y bien estructurado, inspirado en Hearthstone.
+    \item Implementar estrategias dinámicas mediante el patrón \textbf{Strategy}.
+    \item Permitir personalización y ampliación de habilidades usando el patrón \textbf{Decorator}.
+    \item Mantener una arquitectura que soporte futuras expansiones del juego sin complicaciones técnicas.
+\end{itemize}
+
+\section*{Reglas y Estados del Juego}
+Cada partida comienza con dos jugadores que controlan a \textbf{Hunters}, cada uno con 30 puntos de vida. El objetivo es reducir los puntos de vida del oponente a 0 utilizando cartas que representan criaturas, hechizos y trampas. La partida se organiza en turnos alternos y se rige por las siguientes reglas:
+
+\subsection*{1. Fase Inicial}
+\begin{itemize}
+    \item El jugador que comienza recibe 3 cartas, con la opción de descartar y robar nuevas cartas una vez.
+    \item El segundo jugador recibe 4 cartas y tiene la misma posibilidad de descartar hasta 3 cartas.
+\end{itemize}
+
+\subsection*{2. Turnos}
+Cada jugador tiene varias opciones durante su turno:
+\begin{itemize}
+    \item Jugar una carta desde su mano, pagando su costo correspondiente.
+    \item Atacar con las criaturas en juego.
+    \item Pasar el turno al oponente utilizando un botón o comando para indicar el fin de su turno.
+\end{itemize}
+El turno finaliza cuando el jugador decide no realizar más acciones o cuando agota las acciones disponibles.
+
+\subsection*{3. Daño y Puntos de Vida}
+\begin{itemize}
+    \item Cada criatura tiene puntos de ataque y vida. El daño infligido se resta de la vida del oponente o de la criatura objetivo.
+    \item Si los puntos de vida del \textbf{Hunter} llegan a 0, su oponente gana la partida.
+\end{itemize}
+
+\subsection*{4. Aura y Costos}
+\begin{itemize}
+    \item Cada jugador comienza con un espacio de aura limitado, que aumenta con cada turno. El aura es necesaria para jugar cartas más poderosas.
+    \item Las cartas tienen un costo de aura específico que debe ser pagado al jugarlas.
+\end{itemize}
+
+\section*{Patrones de Diseño Implementados}
+\begin{itemize}
+    \item \textbf{MVC} (Model-View-Controller): 
+    Organiza la interacción entre los jugadores y el sistema de cartas. El modelo gestiona la lógica del juego, el controlador actúa como intermediario y la vista puede ser inicializada en la terminal o una interfaz web.
+
+    \item \textbf{Abstract Factory}: 
+    Facilita la creación de familias de cartas, como hechizos o criaturas, sin especificar las clases concretas.
+
+    \item \textbf{Builder}: 
+    Permite personalizar cartas en eventos especiales. Por ejemplo, los jugadores podrán modificar el ataque o la salud de una criatura.
+
+    \item \textbf{Strategy}: 
+    Gestiona estrategias dinámicas durante la partida. Un ejemplo sería un hechizo que aumenta el ataque de todas las criaturas de agua en el campo.
+
+    \item \textbf{Decorator}: 
+    Añade habilidades o efectos adicionales a las cartas. Por ejemplo, otorgar inmunidad temporal o potenciar ataques.
+
+    \item \textbf{State}: 
+    Maneja los diferentes estados del turno de un jugador, como comenzar turno, jugar cartas, fase de combate y finalizar turno.
+
+    \item \textbf{Singleton}: 
+    Asegura que cada sesión de juego sea única y evita múltiples conexiones simultáneas de un mismo jugador.
+\end{itemize}
+
+\section*{Implementación Técnica}
+
+\subsection*{Familias de Cartas con Decoradores}
+La implementación de las cartas se realiza utilizando el patrón de diseño \textbf{Decorator}, que permite añadir dinámicamente comportamientos adicionales a las cartas. La jerarquía de clases es la siguiente:
+
+\begin{itemize}
+    \item \textbf{Card}: Clase abstracta que representa una carta genérica. Contiene atributos como descripción, costo de nen y rareza.
+    \item \textbf{CardDecorator}: Clase abstracta que extiende \textbf{Card} y actúa como base para los decoradores de cartas.
+    \item \textbf{BasicMinionCard}: Decorador concreto que extiende \textbf{CardDecorator} y añade atributos de ataque y defensa a una carta.
+    \item \textbf{SpellCard}: Clase concreta que extiende \textbf{Card} y representa una carta de hechizo.
+    \item \textbf{WeaponCard}: Clase concreta que extiende \textbf{Card} y representa una carta de arma.
+    \item \textbf{TauntDecorator}: Decorador concreto que extiende \textbf{CardDecorator} y añade la habilidad de provocación a una carta.
+    \item \textbf{BattlecryDecorator}: Decorador concreto que extiende \textbf{CardDecorator} y añade la habilidad de grito de batalla a una carta.
+    \item \textbf{ChargeDecorator}: Decorador concreto que extiende \textbf{CardDecorator} y añade la habilidad de carga a una carta.
+\end{itemize}
+
+La clase \textbf{Deck} se encarga de cargar las cartas desde un archivo JSON y aplicar los decoradores correspondientes según los efectos especificados en el archivo. Esto permite una gran flexibilidad y extensibilidad en la creación de nuevas cartas y habilidades.
+
+\subsection*{Implementación de Websockets}
+La comunicación en tiempo real entre los jugadores se gestiona mediante \textbf{websockets}. Esto asegura que las acciones de un jugador se reflejen inmediatamente en la interfaz del otro jugador, proporcionando una experiencia de juego fluida y dinámica. La implementación de websockets se realiza utilizando Spring Boot, que facilita la configuración y gestión de las conexiones.
+
+\begin{itemize}
+    \item \textbf{WebSocketConfig}: Clase de configuración que habilita y configura los websockets en la aplicación.
+    \item \textbf{GameController}: Controlador que maneja las conexiones websocket y las interacciones en tiempo real entre los jugadores.
+    \item \textbf{GameService}: Servicio que contiene la lógica del juego y se comunica con el controlador para actualizar el estado del juego y enviar mensajes a los jugadores.
+\end{itemize}
+
+\section*{Conclusión}
+Este proyecto busca desarrollar un sistema de juego de cartas en línea que combine estrategias complejas con una experiencia amigable para los jugadores. La integración de patrones de diseño proporcionará una arquitectura clara, extensible y fácil de mantener. El uso de \textbf{websockets} asegurará partidas fluidas y dinámicas, ofreciendo una experiencia atractiva y competitiva.
+
+\end{document}
