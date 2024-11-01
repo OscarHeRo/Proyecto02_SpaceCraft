@@ -8,7 +8,14 @@ public class Vida {
     }
 
     public int getVida(){
-        vida = 30;
         return vida;
+    }
+
+    public void recibirDanio(int danio) {
+        if (vida - danio < 0) {
+            vida = 0;
+        } else {
+            vida -= danio;
+        }
     }
 }
