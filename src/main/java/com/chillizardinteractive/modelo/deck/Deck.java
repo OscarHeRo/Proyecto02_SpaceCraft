@@ -3,6 +3,7 @@ package com.chillizardinteractive.modelo.deck;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -101,6 +102,11 @@ public class Deck {
 
     public List<Card> getCards() {
         return cards;
+    }
+
+    //metodo que barajea el deck en cuestion in situ
+    public void barajear(){
+        Collections.shuffle(cards);
     }
 
     public void showDeck() {
