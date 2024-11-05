@@ -16,7 +16,7 @@ public class CardController {
     @GetMapping("/deck/{playerId}")
     public Deck getDeck(@PathVariable String playerId) {
         // Lógica para obtener el mazo del jugador
-        return new Deck(); // Placeholder
+        return new Deck("Cartas1"); // Placeholder
     }
 
     @PostMapping("/startGame")

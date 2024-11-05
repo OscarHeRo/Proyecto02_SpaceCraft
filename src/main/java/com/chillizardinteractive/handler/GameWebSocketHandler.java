@@ -18,9 +18,9 @@ public class GameWebSocketHandler extends TextWebSocketHandler {
     private Deck deck2;
 
     public GameWebSocketHandler() {
-        this.deck1 = new Deck();
+        this.deck1 = new Deck("");
         this.deck1.initializeDeck("src/main/resources/decks.json");
-        this.deck2 = new Deck();
+        this.deck2 = new Deck("");
         this.deck2.initializeDeck("src/main/resources/decks.json");
     }
 
