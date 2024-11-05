@@ -1,14 +1,5 @@
 package com.chillizardinteractive.modelo.deck;
 
-import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Collections;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
 import com.chillizardinteractive.modelo.card.BasicMinionCard;
 import com.chillizardinteractive.modelo.card.BattlecryDecorator;
 import com.chillizardinteractive.modelo.card.Card;
@@ -18,15 +9,58 @@ import com.chillizardinteractive.modelo.card.SpellCard;
 import com.chillizardinteractive.modelo.card.TauntDecorator;
 import com.chillizardinteractive.modelo.card.WeaponCard;
 
-public class Deck {
-    private List<Card> cards;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
-    public Deck() {
-        this.cards = new ArrayList<>();
+public class Deck {
+    private String deckName;
+    private final List<Card> cardList;
+
+    public Deck(String deckName) {
+        this.deckName = deckName;
+        this.cardList = new ArrayList<>();
+    }
+
+    public String getDeckName() {
+        return deckName;
+    }
+
+    public void setDeckName(String deckName) {
+        this.deckName = deckName;
+    }
+
+    public List<Card> getCardList() {
+        cardList.sort(Comparator.comparing(Card::getRarity).thenComparing(Card::getDescription));
+        return cardList;
+    }
+
+    public void addCard(Card card) {
+        if (cardList.size() < 20 && cardList.stream().filter(x -> x.getDescription().equals(card.getDescription())).count() < 3) {
+            cardList.add(card);
+        }
+    }
+
+    public void deleteCard(String cardDescription) {
+        cardList.removeIf(card -> card.getDescription().equals(cardDescription));
+    }
+
+    public String getExportValueAsYdkFile() {
+        StringBuilder text = new StringBuilder("#main\n");
+        for (Card card : cardList) {
+            text.append(card.getDescription()).append("\n");
+        }
+        text.append("\n#extra\n!side\n");
+        return text.toString();
     }
 
     public static Deck generateDeck(String filePath) {
-        Deck deck = new Deck();
+        Deck deck = new Deck("Default Deck");
         deck.initializeDeck(filePath);
         return deck;
     }
@@ -38,13 +72,13 @@ public class Deck {
             JSONObject jsonObject = (JSONObject) parser.parse(reader);
             JSONObject cardsJson = (JSONObject) jsonObject.get("cards");
 
-            List<Card> deck = new ArrayList<>();
-            deck.addAll(loadCards((JSONArray) cardsJson.get("legendary"), 3));
-            deck.addAll(loadCards((JSONArray) cardsJson.get("epic"), 7));
-            deck.addAll(loadCards((JSONArray) cardsJson.get("rare"), 10));
-            deck.addAll(loadCards((JSONArray) cardsJson.get("common"), 15));
+            List<Card> cards = new ArrayList<>();
+            cards.addAll(loadCards((JSONArray) cardsJson.get("legendary"), 3));
+            cards.addAll(loadCards((JSONArray) cardsJson.get("epic"), 7));
+            cards.addAll(loadCards((JSONArray) cardsJson.get("rare"), 10));
+            cards.addAll(loadCards((JSONArray) cardsJson.get("common"), 15));
 
-            this.cards = deck;
+            this.cardList.addAll(cards);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -100,22 +134,13 @@ public class Deck {
         return cards;
     }
 
-    public List<Card> getCards() {
-        return cards;
-    }
-
-    //metodo que barajea el deck en cuestion in situ
-    public void barajear(){
-        Collections.shuffle(cards);
-    }
-
     public void showDeck() {
         System.out.println("Deck:");
-        if (cards == null) {
+        if (cardList.isEmpty()) {
             System.out.println("El mazo está vacío.");
             return;
         }
-        for (Card card : cards) {
+        for (Card card : cardList) {
             if (card == null) {
                 System.out.println("Carta nula encontrada en el mazo.");
             } else {
