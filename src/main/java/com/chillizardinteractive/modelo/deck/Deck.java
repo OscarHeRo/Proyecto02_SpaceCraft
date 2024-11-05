@@ -11,6 +11,7 @@ import com.chillizardinteractive.modelo.card.WeaponCard;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import org.json.simple.JSONArray;
@@ -132,6 +133,10 @@ public class Deck {
             cards.add(card);
         }
         return cards;
+    }
+
+    public void shuffle() {
+        Collections.shuffle(cardList);
     }
 
     public void showDeck() {

@@ -8,8 +8,7 @@ public class DueloDeCazadores {
         Juego juego = new Juego();
 
         // Inicializar el mazo
-        Deck deck = new Deck();
-        deck.barajear();
+        Deck deck = new Deck("Deck 1");
         deck.initializeDeck("src/main/resources/decks.json");
 
         // Mostrar el mazo
