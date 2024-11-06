@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.juegos;
+package com.chillizardinteractive.modelo.state;
 
 import java.util.Random;
 

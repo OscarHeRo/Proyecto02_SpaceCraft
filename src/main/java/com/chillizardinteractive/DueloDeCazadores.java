@@ -1,21 +1,17 @@
 package com.chillizardinteractive;
 
-import com.chillizardinteractive.modelo.deck.Deck;
+import com.chillizardinteractive.modelo.state.*;
 
 public class DueloDeCazadores {
     public static void main(String[] args) {
-        // Crear un nuevo juego
-        Juego juego = new Juego();
-
-        // Inicializar el mazo
-        Deck deck = new Deck("Deck 1");
-        deck.initializeDeck("src/main/resources/decks.json");
-
-        // Mostrar el mazo
-        System.out.println("Deck:");
-        deck.showDeck();
+        Player player1 = new Player("Jugador 1");
+        Player player2 = new Player("Jugador 2");
+        GameContext context = new GameContext(player1, player2, new InicioJuego());
 
         // Iniciar el juego
-        juego.iniciar();
+        context.iniciarJuego();
+
+        // Lanzar la moneda y determinar el primer jugador
+        context.lanzarMoneda();
     }
 }

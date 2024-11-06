@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Stack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -21,11 +22,13 @@ import org.json.simple.parser.ParseException;
 
 public class Deck {
     private String deckName;
-    private final List<Card> cardList;
+    private final Stack<Card> cardStack;
+    private final List<Card> originalDeck;
 
     public Deck(String deckName) {
         this.deckName = deckName;
-        this.cardList = new ArrayList<>();
+        this.cardStack = new Stack<>();
+        this.originalDeck = new ArrayList<>();
     }
 
     public String getDeckName() {
@@ -37,23 +40,22 @@ public class Deck {
     }
 
     public List<Card> getCardList() {
-        cardList.sort(Comparator.comparing(Card::getRarity).thenComparing(Card::getDescription));
-        return cardList;
+        return new ArrayList<>(cardStack);
     }
 
     public void addCard(Card card) {
-        if (cardList.size() < 20 && cardList.stream().filter(x -> x.getDescription().equals(card.getDescription())).count() < 3) {
-            cardList.add(card);
+        if (cardStack.size() < 20 && cardStack.stream().filter(x -> x.getDescription().equals(card.getDescription())).count() < 3) {
+            cardStack.push(card);
         }
     }
 
     public void deleteCard(String cardDescription) {
-        cardList.removeIf(card -> card.getDescription().equals(cardDescription));
+        cardStack.removeIf(card -> card.getDescription().equals(cardDescription));
     }
 
     public String getExportValueAsYdkFile() {
         StringBuilder text = new StringBuilder("#main\n");
-        for (Card card : cardList) {
+        for (Card card : cardStack) {
             text.append(card.getDescription()).append("\n");
         }
         text.append("\n#extra\n!side\n");
@@ -79,7 +81,9 @@ public class Deck {
             cards.addAll(loadCards((JSONArray) cardsJson.get("rare"), 10));
             cards.addAll(loadCards((JSONArray) cardsJson.get("common"), 15));
 
-            this.cardList.addAll(cards);
+            Collections.shuffle(cards);
+            this.cardStack.addAll(cards);
+            this.originalDeck.addAll(cards);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -136,16 +140,16 @@ public class Deck {
     }
 
     public void shuffle() {
-        Collections.shuffle(cardList);
+        Collections.shuffle(cardStack);
     }
 
     public void showDeck() {
         System.out.println("Deck:");
-        if (cardList.isEmpty()) {
+        if (cardStack.isEmpty()) {
             System.out.println("El mazo está vacío.");
             return;
         }
-        for (Card card : cardList) {
+        for (Card card : cardStack) {
             if (card == null) {
                 System.out.println("Carta nula encontrada en el mazo.");
             } else {
@@ -154,7 +158,17 @@ public class Deck {
         }
     }
 
-    public List<Card> getCards(){
-        return cardList;
+    /**
+     * Saca una carta del mazo. Si el mazo está vacío, lo vuelve a llenar con todas las cartas del mazo original y las baraja.
+     *
+     * @return La carta en la cima del mazo, o null si no hay cartas.
+     */
+    public Card sacarCarta() {
+        if (cardStack.isEmpty()) {
+            System.out.println("El mazo está vacío. Barajando el mazo original...");
+            cardStack.addAll(originalDeck);
+            shuffle();
+        }
+        return cardStack.isEmpty() ? null : cardStack.pop();
     }
 }
