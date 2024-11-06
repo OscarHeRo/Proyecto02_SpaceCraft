@@ -1,13 +1,20 @@
 package com.chillizardinteractive.modelo.state;
 
-import com.chillizardinteractive.modelo.deck.Deck;
+import com.chillizardinteractive.controlador.GameController;
+import com.chillizardinteractive.vista.GameView;
 
 public class InicioJuego implements GameState {
+    private GameView view;
+
+    public InicioJuego(GameView view) {
+        this.view = view;
+    }
+
     @Override
     public void iniciarJuego(GameContext context) {
-        System.out.println("El juego ha comenzado. Preparando jugadores y lanzamiento de moneda...");
+        view.mostrarMensaje("El juego ha comenzado. Preparando jugadores y lanzamiento de moneda...");
 
-        // Jugador 1 y jugador 2 inicializados en contexto
+        // Inicializar jugadores
         Player player1 = context.getPlayer1();
         Player player2 = context.getPlayer2();
 
@@ -16,34 +23,34 @@ public class InicioJuego implements GameState {
         player2.getDeck().initializeDeck("src/main/resources/decks.json");
 
         // Cada jugador comienza con 30 puntos de vida y 1 espacio de nen lleno
-        System.out.println("Jugador 1: Vida = " + player1.getHealth() + ", Espacios de Nen = " + player1.getNenSpaces() + ", Puntos de Nen = " + player1.getNenPoints());
-        System.out.println("Jugador 2: Vida = " + player2.getHealth() + ", Espacios de Nen = " + player2.getNenSpaces() + ", Puntos de Nen = " + player2.getNenPoints());
+        view.mostrarEstadoJugador(player1.getName(), player1.getHealth(), player1.getNenSpaces(), player1.getNenPoints());
+        view.mostrarEstadoJugador(player2.getName(), player2.getHealth(), player2.getNenSpaces(), player2.getNenPoints());
 
-        context.setState(new LanzamientoMoneda());
+        context.setState(new LanzamientoMoneda(view));
     }
 
     @Override
     public void lanzarMoneda(GameContext context) {
-        System.out.println("Error: No se puede lanzar la moneda en el estado de inicio del juego.");
+        view.mostrarError("No se puede lanzar la moneda en el estado de inicio del juego.");
     }
 
     @Override
     public void iniciarTurno(GameContext context) {
-        System.out.println("Error: No se puede iniciar el turno en el estado de inicio del juego.");
+        view.mostrarError("No se puede iniciar el turno en el estado de inicio del juego.");
     }
 
     @Override
     public void faseCombate(GameContext context) {
-        System.out.println("Error: No se puede pasar a la fase de combate en el estado de inicio del juego.");
+        view.mostrarError("No se puede pasar a la fase de combate en el estado de inicio del juego.");
     }
 
     @Override
     public void terminarTurno(GameContext context) {
-        System.out.println("Error: No se puede terminar el turno en el estado de inicio del juego.");
+        view.mostrarError("No se puede terminar el turno en el estado de inicio del juego.");
     }
 
     @Override
     public void finalizarJuego(GameContext context) {
-        System.out.println("Error: No se puede finalizar el juego en el estado de inicio del juego.");
+        view.mostrarError("No se puede finalizar el juego en el estado de inicio del juego.");
     }
 }

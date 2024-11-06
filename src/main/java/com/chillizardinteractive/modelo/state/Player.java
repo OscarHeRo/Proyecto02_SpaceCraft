@@ -44,4 +44,16 @@ public class Player {
     public Deck getDeck() {
         return deck;
     }
+
+    public void shuffleDeck() {
+        deck.shuffle();
+    }
+
+    public void drawCard() {
+        if (deck.getCardList().isEmpty()) {
+            System.out.println(name + " no tiene más cartas en el mazo. Barajando el mazo...");
+            shuffleDeck();
+        }
+        // Lógica para robar una carta
+    }
 }

@@ -12,13 +12,11 @@ import com.chillizardinteractive.modelo.card.WeaponCard;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 public class Deck {
     private String deckName;
@@ -51,21 +49,6 @@ public class Deck {
 
     public void deleteCard(String cardDescription) {
         cardStack.removeIf(card -> card.getDescription().equals(cardDescription));
-    }
-
-    public String getExportValueAsYdkFile() {
-        StringBuilder text = new StringBuilder("#main\n");
-        for (Card card : cardStack) {
-            text.append(card.getDescription()).append("\n");
-        }
-        text.append("\n#extra\n!side\n");
-        return text.toString();
-    }
-
-    public static Deck generateDeck(String filePath) {
-        Deck deck = new Deck("Default Deck");
-        deck.initializeDeck(filePath);
-        return deck;
     }
 
     public void initializeDeck(String filePath) {
@@ -143,6 +126,20 @@ public class Deck {
         Collections.shuffle(cardStack);
     }
 
+    /**
+     * Saca una carta del mazo. Si el mazo está vacío, lo vuelve a llenar con todas las cartas del mazo original y las baraja.
+     *
+     * @return La carta en la cima del mazo, o null si no hay cartas.
+     */
+    public Card sacarCarta() {
+        if (cardStack.isEmpty()) {
+            System.out.println("El mazo está vacío. Barajando el mazo original...");
+            cardStack.addAll(originalDeck);
+            shuffle();
+        }
+        return cardStack.isEmpty() ? null : cardStack.pop();
+    }
+
     public void showDeck() {
         System.out.println("Deck:");
         if (cardStack.isEmpty()) {
@@ -156,19 +153,5 @@ public class Deck {
                 System.out.println("- " + card.getDescription());
             }
         }
-    }
-
-    /**
-     * Saca una carta del mazo. Si el mazo está vacío, lo vuelve a llenar con todas las cartas del mazo original y las baraja.
-     *
-     * @return La carta en la cima del mazo, o null si no hay cartas.
-     */
-    public Card sacarCarta() {
-        if (cardStack.isEmpty()) {
-            System.out.println("El mazo está vacío. Barajando el mazo original...");
-            cardStack.addAll(originalDeck);
-            shuffle();
-        }
-        return cardStack.isEmpty() ? null : cardStack.pop();
     }
 }

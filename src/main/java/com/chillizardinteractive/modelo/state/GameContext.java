@@ -1,16 +1,22 @@
 package com.chillizardinteractive.modelo.state;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GameContext {
     private GameState currentState;
     private Player player1;
     private Player player2;
     private Player currentPlayer;
-
+    private List<Player> players;
 
     public GameContext(Player player1, Player player2, GameState initialState) {
         this.player1 = player1;
         this.player2 = player2;
         this.currentState = initialState;
+        this.players = new ArrayList<>();
+        this.players.add(player1);
+        this.players.add(player2);
     }
 
     public void setState(GameState state) {
@@ -43,7 +49,6 @@ public class GameContext {
 
     public Player getPlayer1() {
         return player1;
-        
     }
 
     public Player getPlayer2() {
@@ -56,5 +61,9 @@ public class GameContext {
 
     public Player getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
     }
 }

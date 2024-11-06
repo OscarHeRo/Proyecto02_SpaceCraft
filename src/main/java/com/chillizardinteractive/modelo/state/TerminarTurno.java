@@ -1,10 +1,18 @@
 package com.chillizardinteractive.modelo.state;
 
+import com.chillizardinteractive.vista.GameView;
+
 public class TerminarTurno implements GameState {
+    private GameView view;
+
+    public TerminarTurno(GameView view) {
+        this.view = view;
+    }
+
     @Override
     public void terminarTurno(GameContext context) {
-        System.out.println("Turno terminado. Pasando al siguiente jugador...");
-        context.setState(new InicioTurno());
+        view.mostrarMensaje("Turno terminado. Pasando al siguiente jugador...");
+        context.setState(new InicioTurno(view));
     }
 
     @Override
