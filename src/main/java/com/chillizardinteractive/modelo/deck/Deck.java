@@ -154,4 +154,8 @@ public class Deck {
             }
         }
     }
+
+    public List<Card> getCards() {
+        return originalDeck;
+    }
 }
