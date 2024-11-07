@@ -25,6 +25,7 @@ public class InicioTurno implements GameState {
         Card drawnCard = currentPlayer.getDeck().sacarCarta();
 
         if (drawnCard != null) {
+            currentPlayer.getMano().agregarCartasMano(drawnCard);;
             view.mostrarCartaRobada(currentPlayer.getName(), drawnCard.getDescription());
         } else {
             view.mostrarMensaje(currentPlayer.getName() + " no tiene más cartas en el mazo.");

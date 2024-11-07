@@ -8,6 +8,7 @@ public class Player {
     private int nenSpaces;
     private int nenPoints;
     private Deck deck;
+    private Mano manoJugador;
 
     public Player(String name) {
         this.name = name;
@@ -37,8 +38,16 @@ public class Player {
         return nenPoints;
     }
 
+    public Mano getMano(){
+        return manoJugador;
+    }
+
     public void setNenPoints(int nenPoints) {
         this.nenPoints = nenPoints;
+    }
+
+    public void setMano(Mano manoJugador){
+        this.manoJugador = manoJugador;
     }
 
     public Deck getDeck() {
