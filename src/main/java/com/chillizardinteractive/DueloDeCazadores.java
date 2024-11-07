@@ -19,5 +19,9 @@ public class DueloDeCazadores {
 
         // Lanzar la moneda y determinar el primer jugador
         controller.lanzarMoneda();
+
+        controller.faseCombate();
+
+        controller.finalizarJuego();
     }
 }

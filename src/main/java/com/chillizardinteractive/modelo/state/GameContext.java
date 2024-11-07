@@ -9,6 +9,7 @@ public class GameContext {
     private Player player2;
     private Player currentPlayer;
     private List<Player> players;
+    private boolean permisoParaAtaque = false;
 
     public GameContext(Player player1, Player player2, GameState initialState) {
         this.player1 = player1;
@@ -65,5 +66,9 @@ public class GameContext {
 
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public void autorizarAtaque() {
+        permisoParaAtaque = true;
     }
 }

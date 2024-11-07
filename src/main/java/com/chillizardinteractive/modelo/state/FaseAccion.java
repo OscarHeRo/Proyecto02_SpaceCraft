@@ -12,6 +12,7 @@ public class FaseAccion implements GameState {
     @Override
     public void faseCombate(GameContext context) {
         view.mostrarMensaje("Fase de combate comenzando. Los jugadores pueden atacar con sus criaturas...");
+        context.autorizarAtaque();
         context.setState(new TerminarTurno(view));
     }
 
