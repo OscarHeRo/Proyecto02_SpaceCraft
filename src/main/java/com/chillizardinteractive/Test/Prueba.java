@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 import com.chillizardinteractive.DueloDeCazadores;
+import com.chillizardinteractive.modelo.player.Player;
 
 import static org.junit.Assert.*;
 
@@ -20,5 +21,7 @@ public class Prueba extends DueloDeCazadores{
     @Test
     void exodia(){
         System.out.println("Prueba: ");
+        Player player1 = new Player("Jugador 1");
+        Player player2 = new Player("Jugador 2");
     }
 }
