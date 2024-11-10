@@ -1,5 +1,7 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.state.gameState;
 
+import com.chillizardinteractive.modelo.state.player.Player;
+import com.chillizardinteractive.modelo.state.turn.*;
 import java.util.ArrayList;
 import java.util.List;
 

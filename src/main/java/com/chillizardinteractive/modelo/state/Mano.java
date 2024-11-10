@@ -1,22 +1,21 @@
 package com.chillizardinteractive.modelo.state;
 
-import java.util.ArrayList;
-
 import com.chillizardinteractive.modelo.card.Card;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mano {
-    private ArrayList<Card> mano;
+    private List<Card> cartasEnMano;
 
-    public ArrayList<Card> getMano(){
-        return mano;
+    public Mano() {
+        this.cartasEnMano = new ArrayList<>();
     }
 
-    public void agregarCartasMano(Card carta){
-        mano.add(carta);
+    public void agregarCartasMano(Card carta) {
+        cartasEnMano.add(carta);
     }
 
-    public void descartarCartaMano(Card carta){
-        //descartar la primera aparición de la carta
-        mano.remove(carta);
+    public List<Card> getCartasEnMano() {
+        return cartasEnMano;
     }
 }
