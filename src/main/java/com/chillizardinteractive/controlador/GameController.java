@@ -1,6 +1,6 @@
 package com.chillizardinteractive.controlador;
 
-import com.chillizardinteractive.modelo.state.GameContext;
+import com.chillizardinteractive.modelo.gameState.GameContext;
 import com.chillizardinteractive.vista.GameView;
 
 public class GameController {

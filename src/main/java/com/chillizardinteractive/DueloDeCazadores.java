@@ -1,9 +1,9 @@
 package com.chillizardinteractive;
 
 import com.chillizardinteractive.controlador.GameController;
-import com.chillizardinteractive.modelo.state.GameContext;
-import com.chillizardinteractive.modelo.state.InicioJuego;
-import com.chillizardinteractive.modelo.state.Player;
+import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.modelo.gameState.GameContext;
+import com.chillizardinteractive.modelo.gameState.InicioJuego;
 import com.chillizardinteractive.vista.GameView;
 
 public class DueloDeCazadores {

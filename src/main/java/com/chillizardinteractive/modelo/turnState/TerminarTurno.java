@@ -1,5 +1,7 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.turnState;
 
+import com.chillizardinteractive.modelo.gameState.GameState;
+import com.chillizardinteractive.modelo.gameState.GameContext;
 import com.chillizardinteractive.vista.GameView;
 
 public class TerminarTurno implements GameState {

@@ -1,6 +1,8 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.turnState;
 
 import com.chillizardinteractive.vista.GameView;
+import com.chillizardinteractive.modelo.gameState.GameContext;
+import com.chillizardinteractive.modelo.gameState.GameState;;
 
 public class FaseAccion implements GameState {
     private GameView view;

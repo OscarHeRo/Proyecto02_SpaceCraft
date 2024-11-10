@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.player;
 
 import com.chillizardinteractive.modelo.deck.Deck;
 

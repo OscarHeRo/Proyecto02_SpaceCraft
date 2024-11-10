@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.gameState;
 
 // Interfaz GameState que define los diferentes estados del juego
 public interface GameState {

@@ -1,7 +1,10 @@
-package com.chillizardinteractive.modelo.state;
+package com.chillizardinteractive.modelo.gameState;
 
 import com.chillizardinteractive.controlador.GameController;
+import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.modelo.turnState.LanzamientoMoneda;
 import com.chillizardinteractive.vista.GameView;
+
 
 public class InicioJuego implements GameState {
     private GameView view;
