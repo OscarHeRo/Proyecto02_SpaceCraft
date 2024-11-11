@@ -74,4 +74,16 @@ public class GameContext {
     public void autorizarAtaque() {
         permisoParaAtaque = true;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void switchPlayer() {
+        if (currentPlayer == player1){
+            currentPlayer = player2;
+        } else if (currentPlayer == player2){
+            currentPlayer = player1;
+        }
+    }
 }
