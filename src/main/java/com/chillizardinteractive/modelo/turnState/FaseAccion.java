@@ -31,7 +31,7 @@ public class FaseAccion implements GameState {
 
     @Override
     public void iniciarTurno(GameContext context) {
-        view.mostrarMensaje("Fase de acción. Los jugadores pueden colocar minions en el tablero.");
+        view.mostrarMensaje("Fase de acción. Los jugadores pueden colocar minions en el tablero y atacar.");
         colocarMinions(context);
     }
 

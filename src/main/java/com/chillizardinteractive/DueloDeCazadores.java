@@ -30,9 +30,11 @@ public class DueloDeCazadores {
         // Lanzar la moneda y determinar el primer jugador
         controller.lanzarMoneda();
 
+        controller.faseCombate();
+
         // Generar HTML para las cartas del mazo
-        generateDeckHtml(player1.getDeck(), "output/cards/player1");
-        generateDeckHtml(player2.getDeck(), "output/cards/player2");
+       // generateDeckHtml(player1.getDeck(), "output/cards/player1");
+       // generateDeckHtml(player2.getDeck(), "output/cards/player2");
     }
 
     private static void generateDeckHtml(Deck deck, String outputDir) {

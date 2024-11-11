@@ -5,16 +5,16 @@ import com.chillizardinteractive.modelo.card.MinionCard;
 import com.chillizardinteractive.modelo.card.SpellCard;
 
 public class Board {
-    private MinionCard[] minions;
+    private MinionCard[] minionSpaces;
     private SpellCard[] spellSpaces;
 
     public Board() {
-        this.minions = new MinionCard[5];
+        this.minionSpaces = new MinionCard[5];
         this.spellSpaces = new SpellCard[5];
     }
 
     public MinionCard[] getMinions() {
-        return minions;
+        return minionSpaces.clone();;
     }
 
     public SpellCard[] getSpellSpaces() {
@@ -22,10 +22,10 @@ public class Board {
     }
 
     public boolean placeMinion(MinionCard minion, int position) {
-        if (position < 0 || position >= minions.length || minions[position] != null) {
+        if (position < 0 || position >= minionSpaces.length || minionSpaces[position] != null) {
             return false;
         }
-        minions[position] = minion;
+        minionSpaces[position] = minion;
         return true;
     }
 
@@ -40,8 +40,8 @@ public class Board {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("[Minions]\n");
-        for (int i = 0; i < minions.length; i++) {
-            sb.append((i + 1) + "._ " + (minions[i] == null ? "vacio" : minions[i].getDescription()) + "\n");
+        for (int i = 0; i < minionSpaces.length; i++) {
+            sb.append((i + 1) + "._ " + (minionSpaces[i] == null ? "vacio" : minionSpaces[i].getDescription()) + "\n");
         }
         sb.append("\n[SpellCards]\n");
         for (int i = 0; i < spellSpaces.length; i++) {
