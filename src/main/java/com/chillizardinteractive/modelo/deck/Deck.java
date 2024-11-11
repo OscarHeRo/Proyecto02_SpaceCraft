@@ -109,4 +109,13 @@ public class Deck {
     public List<Card> getCards() {
         return originalDeck;
     }
+
+    public String  deckToString() {
+
+        String deckString = "";
+        for (Card card : cardStack) {
+            deckString += card.getDescription() + "\n";
+        }
+        return deckString;
+    }
 }

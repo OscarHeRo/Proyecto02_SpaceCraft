@@ -1,5 +1,6 @@
 package com.chillizardinteractive.modelo.gameState;
 
+import com.chillizardinteractive.modelo.board.Board;
 import com.chillizardinteractive.modelo.player.Player;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,7 @@ public class GameContext {
     private Player currentPlayer;
     private List<Player> players;
     private boolean permisoParaAtaque = false;
+    private Board board;
 
     public GameContext(Player player1, Player player2, GameState initialState) {
         this.player1 = player1;

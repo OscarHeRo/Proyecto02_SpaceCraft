@@ -16,6 +16,7 @@ public class Player {
         this.nenSpaces = 1;
         this.nenPoints = 1;
         this.deck = new Deck(name + "'s Deck");
+        this.deck.initializeDeck("src/main/resources/decks.json"); // Inicializar el mazo desde el archivo JSON
         this.manoJugador = new Mano();
     }
 

@@ -16,10 +16,13 @@ public class DueloDeCazadores {
     public static void main(String[] args) {
         Player player1 = new Player("Jugador 1");
         Player player2 = new Player("Jugador 2");
+
+        System.out.println(player1.getDeck().deckToString());
+        System.out.println(player2.getDeck().deckToString());
+
         GameView view = new GameView();
         GameContext context = new GameContext(player1, player2, new InicioJuego(view));
         GameController controller = new GameController(context, view);
-        Deck deck = new Deck("Deck de Prueba");
 
         // Iniciar el juego
         controller.iniciarJuego();
@@ -28,7 +31,8 @@ public class DueloDeCazadores {
         controller.lanzarMoneda();
 
         // Generar HTML para las cartas del mazo
-        generateDeckHtml(deck, "output/cards");
+        generateDeckHtml(player1.getDeck(), "output/cards/player1");
+        generateDeckHtml(player2.getDeck(), "output/cards/player2");
     }
 
     private static void generateDeckHtml(Deck deck, String outputDir) {

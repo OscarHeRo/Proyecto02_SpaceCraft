@@ -1,6 +1,5 @@
 package com.chillizardinteractive.modelo.gameState;
 
-import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.modelo.turnState.LanzamientoMoneda;
 import com.chillizardinteractive.vista.GameView;
@@ -19,10 +18,6 @@ public class InicioJuego implements GameState {
         // Inicializar jugadores
         Player player1 = context.getPlayer1();
         Player player2 = context.getPlayer2();
-
-        // Cada jugador inicia con un mazo de 30 cartas
-        player1.getDeck().initializeDeck("src/main/resources/decks.json");
-        player2.getDeck().initializeDeck("src/main/resources/decks.json");
 
         // Cada jugador comienza con 30 puntos de vida y 1 espacio de nen lleno
         view.mostrarEstadoJugador(player1.getName(), player1.getHealth(), player1.getNenSpaces(), player1.getNenPoints());
