@@ -16,7 +16,7 @@ public class Player {
         this.nenSpaces = 1;
         this.nenPoints = 1;
         this.deck = new Deck(name + "'s Deck");
-        this.manoJugador = new Mano(); // Asegúrate de inicializar la mano del jugador
+        this.manoJugador = new Mano();
     }
 
     public String getName() {

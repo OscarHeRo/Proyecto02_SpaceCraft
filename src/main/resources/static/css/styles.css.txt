@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+.card {
+    width: 300px;
+    border: 1px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+.card-header {
+    background-color: #f4f4f4;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.rarity-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+.card-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-image img {
+    width: 100%;
+    height: auto;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+.card-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.card-attack, .card-defense, .card-cost {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.card-description {
+    font-size: 14px;
+}

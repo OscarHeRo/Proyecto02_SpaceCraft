@@ -1,22 +1,15 @@
 package com.chillizardinteractive.modelo.deck;
 
-import com.chillizardinteractive.modelo.card.BasicMinionCard;
-import com.chillizardinteractive.modelo.card.BattlecryDecorator;
-import com.chillizardinteractive.modelo.card.Card;
-import com.chillizardinteractive.modelo.card.ChargeDecorator;
-import com.chillizardinteractive.modelo.card.Rarity;
-import com.chillizardinteractive.modelo.card.SpellCard;
-import com.chillizardinteractive.modelo.card.TauntDecorator;
-import com.chillizardinteractive.modelo.card.WeaponCard;
+import com.chillizardinteractive.modelo.card.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 public class Deck {
     private String deckName;
@@ -27,28 +20,6 @@ public class Deck {
         this.deckName = deckName;
         this.cardStack = new Stack<>();
         this.originalDeck = new ArrayList<>();
-    }
-
-    public String getDeckName() {
-        return deckName;
-    }
-
-    public void setDeckName(String deckName) {
-        this.deckName = deckName;
-    }
-
-    public List<Card> getCardList() {
-        return new ArrayList<>(cardStack);
-    }
-
-    public void addCard(Card card) {
-        if (cardStack.size() < 20 && cardStack.stream().filter(x -> x.getDescription().equals(card.getDescription())).count() < 3) {
-            cardStack.push(card);
-        }
-    }
-
-    public void deleteCard(String cardDescription) {
-        cardStack.removeIf(card -> card.getDescription().equals(cardDescription));
     }
 
     public void initializeDeck(String filePath) {
@@ -78,45 +49,26 @@ public class Deck {
         for (int i = 0; i < count && i < cardsArray.size(); i++) {
             JSONObject cardJson = (JSONObject) cardsArray.get(i);
             String name = (String) cardJson.get("name");
+            String description = (String) cardJson.get("description");
             int nenCost = ((Long) cardJson.get("cost")).intValue();
-            Rarity rarity = Rarity.valueOf((String) cardJson.get("rarity"));
             String type = (String) cardJson.get("type");
+            int attack = cardJson.containsKey("attack") ? ((Long) cardJson.get("attack")).intValue() : 0;
+            int defense = cardJson.containsKey("defense") ? ((Long) cardJson.get("defense")).intValue() : 0;
+            Rarity rarity = Rarity.valueOf((String) cardJson.get("rarity"));
+            Card card = CardFactory.crearCarta(type, name, description, nenCost, attack, defense, rarity);
 
-            Card card;
-            switch (type) {
-                case "Spell":
-                    String description = (String) cardJson.get("description");
-                    card = new SpellCard(nenCost, name, description, rarity);
-                    break;
-                case "Weapon":
-                    int weaponAttack = ((Long) cardJson.get("attack")).intValue();
-                    int durability = ((Long) cardJson.get("durability")).intValue();
-                    card = new WeaponCard(weaponAttack, durability, nenCost, name, rarity);
-                    break;
-                case "Minion":
-                    int minionAttack = ((Long) cardJson.get("attack")).intValue();
-                    int defense = ((Long) cardJson.get("defense")).intValue();
-                    card = new BasicMinionCard(name, nenCost, rarity, minionAttack, defense);
-
-                    String effect = (String) cardJson.get("effect");
-                    if (effect != null) {
-                        switch (effect) {
-                            case "Taunt":
-                                card = new TauntDecorator(card);
-                                break;
-                            case "Battlecry":
-                                card = new BattlecryDecorator(card, "Grito de Batalla");
-                                break;
-                            case "Charge":
-                                card = new ChargeDecorator(card);
-                                break;
-                        }
-                    }
-                    break;
-                default:
-                    throw new IllegalArgumentException("Tipo de carta desconocido: " + type);
+            String effect = (String) cardJson.get("effect");
+            if (effect != null) {
+                switch (effect) {
+                    case "Taunt":
+                        card = new TauntDecorator(card);
+                        break;
+                    case "Charge":
+                        card = new ChargeDecorator(card);
+                        break;
+                    // Agregar más decoradores según sea necesario
+                }
             }
-
             cards.add(card);
         }
         return cards;
@@ -126,11 +78,6 @@ public class Deck {
         Collections.shuffle(cardStack);
     }
 
-    /**
-     * Saca una carta del mazo. Si el mazo está vacío, lo vuelve a llenar con todas las cartas del mazo original y las baraja.
-     *
-     * @return La carta en la cima del mazo, o null si no hay cartas.
-     */
     public Card sacarCarta() {
         if (cardStack.isEmpty()) {
             System.out.println("El mazo está vacío. Barajando el mazo original...");
@@ -153,6 +100,10 @@ public class Deck {
                 System.out.println("- " + card.getDescription());
             }
         }
+    }
+
+    public List<Card> getCardList() {
+        return new ArrayList<>(cardStack);
     }
 
     public List<Card> getCards() {

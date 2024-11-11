@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{cardName}}</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <img src="../pngs/rarity-icon.png" alt="Rarity" class="rarity-icon">
+            <span class="card-name">{{cardName}}</span>
+        </div>
+        <div class="card-image">
+            <img src="../pngs/card-image.png" alt="Card Image">
+        </div>
+        <div class="card-body">
+            <div class="card-stats">
+                <span class="card-attack">{{cardAttack}}</span>
+                <span class="card-defense">{{cardDefense}}</span>
+                <span class="card-cost">{{cardCost}}</span>
+            </div>
+            <div class="card-description">
+                <p>{{cardDescription}}</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

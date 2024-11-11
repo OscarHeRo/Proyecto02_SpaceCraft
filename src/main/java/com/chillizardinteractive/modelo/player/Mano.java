@@ -18,4 +18,14 @@ public class Mano {
     public List<Card> getCartasEnMano() {
         return cartasEnMano;
     }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[\n");
+        for (int i = 0; i < cartasEnMano.size(); i++) {
+            sb.append((i + 1) + "._ " + cartasEnMano.get(i).getDescription() + "\n");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }

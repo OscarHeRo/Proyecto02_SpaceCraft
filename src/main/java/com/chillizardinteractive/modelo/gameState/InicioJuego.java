@@ -5,7 +5,6 @@ import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.modelo.turnState.LanzamientoMoneda;
 import com.chillizardinteractive.vista.GameView;
 
-
 public class InicioJuego implements GameState {
     private GameView view;
 

@@ -1,11 +1,11 @@
 package com.chillizardinteractive.modelo.card;
 
-public class BasicMinionCard extends Card {
+public class MinionCard extends Card {
     private final int attack;
     private final int defense;
 
-    public BasicMinionCard(String description, int nenCost, Rarity rarity, int attack, int defense) {
-        super(description, nenCost, rarity);
+    public MinionCard(String name, String description, int nenCost, int attack, int defense, Rarity rarity) {
+        super(name, description, nenCost, rarity);
         this.attack = attack;
         this.defense = defense;
     }

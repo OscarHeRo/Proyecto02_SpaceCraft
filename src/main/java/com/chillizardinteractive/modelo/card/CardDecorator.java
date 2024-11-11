@@ -4,13 +4,18 @@ public abstract class CardDecorator extends Card {
     protected final Card decoratedCard;
 
     public CardDecorator(Card card) {
-        super(card.getDescription(), card.getNenCost(), card.getRarity());
+        super(card.getName(), card.getDescription(), card.getNenCost(), card.getRarity());
         this.decoratedCard = card;
     }
 
     @Override
     public int getNenCost() {
         return decoratedCard.getNenCost();
+    }
+
+    @Override
+    public String getName() {
+        return decoratedCard.getName();
     }
 
     @Override

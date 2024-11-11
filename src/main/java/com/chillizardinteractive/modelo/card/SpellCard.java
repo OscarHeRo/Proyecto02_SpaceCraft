@@ -1,15 +1,13 @@
 package com.chillizardinteractive.modelo.card;
 
 public class SpellCard extends Card {
-    private final String effect;
 
-    public SpellCard(int nenCost, String description, String effect, Rarity rarity) {
-        super(description, nenCost, rarity);
-        this.effect = effect;
+    public SpellCard(String name, String description, int nenCost, Rarity rarity) {
+        super(name, description, nenCost, rarity);
     }
 
     @Override
     public void playEffect() {
-        System.out.println(getDescription() + ": " + effect);
+        System.out.println(getDescription() + " ha sido jugado.");
     }
 }
