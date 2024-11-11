@@ -14,7 +14,7 @@ public class Board {
     }
 
     public MinionCard[] getMinions() {
-        return minionSpaces.clone();;
+        return minionSpaces.clone();
     }
 
     public SpellCard[] getSpellSpaces() {
