@@ -19,7 +19,21 @@ public class Prueba extends DueloDeCazadores{
      * Test
      */
     @Test
-    void exodia(){
+    void prueba1(){
+        System.out.println("Prueba: ");
+        Player player1 = new Player("Jugador 1");
+        Player player2 = new Player("Jugador 2");
+    }
+
+    @Test
+    void prueba2(){
+        System.out.println("Prueba: ");
+        Player player1 = new Player("Jugador 1");
+        Player player2 = new Player("Jugador 2");
+    }
+
+    @Test
+    void prueba3(){
         System.out.println("Prueba: ");
         Player player1 = new Player("Jugador 1");
         Player player2 = new Player("Jugador 2");
