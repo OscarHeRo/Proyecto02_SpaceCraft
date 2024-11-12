@@ -19,8 +19,8 @@ public class GameContext {
         this.player2 = player2;
         this.currentState = initialState;
         this.players = new ArrayList<>();
-        this.players.add(player1);
-        this.players.add(player2);
+        if (player1 != null) this.players.add(player1);
+        if (player2 != null) this.players.add(player2);
         this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
         this.board = new Board(); // Asegúrate de inicializar board
     }
@@ -57,8 +57,22 @@ public class GameContext {
         return player1;
     }
 
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+        if (!players.contains(player1)) {
+            players.add(player1);
+        }
+    }
+
     public Player getPlayer2() {
         return player2;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+        if (!players.contains(player2)) {
+            players.add(player2);
+        }
     }
 
     public void setCurrentPlayer(Player player) {

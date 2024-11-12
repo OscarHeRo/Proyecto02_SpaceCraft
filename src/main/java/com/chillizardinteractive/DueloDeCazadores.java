@@ -1,27 +1,16 @@
 package com.chillizardinteractive;
 
 import com.chillizardinteractive.controlador.GameController;
-import com.chillizardinteractive.modelo.deck.Deck;
 import com.chillizardinteractive.modelo.gameState.GameContext;
-import com.chillizardinteractive.modelo.turnState.InicioTurno;
-import com.chillizardinteractive.modelo.player.Player;
-import com.chillizardinteractive.vista.CardHtmlGenerator;
+import com.chillizardinteractive.modelo.gameState.InicioJuego;
 import com.chillizardinteractive.vista.GameView;
-import com.chillizardinteractive.modelo.card.Card;
 
-import java.io.File;
-import java.io.IOException;
+import java.util.Scanner;
 
 public class DueloDeCazadores {
     public static void main(String[] args) {
-        Player player1 = new Player("Jugador 1");
-        Player player2 = new Player("Jugador 2");
-
-        System.out.println(player1.getDeck().deckToString());
-        System.out.println(player2.getDeck().deckToString());
-
         GameView view = new GameView();
-        GameContext context = new GameContext(player1, player2, new InicioTurno(view));
+        GameContext context = new GameContext(null, null, new InicioJuego(view));
         GameController controller = new GameController(context, view);
 
         // Iniciar el juego
@@ -31,30 +20,27 @@ public class DueloDeCazadores {
         controller.lanzarMoneda();
 
         // Iniciar el turno del jugador actual
+        Scanner scanner = new Scanner(System.in);
         while (true) {
             controller.iniciarTurno();
-            controller.faseAccion();
+            while (true) {
+                System.out.println("Seleccione una acción: 1. Colocar carta, 2. Atacar, 3. Terminar turno");
+                int accion = scanner.nextInt();
+                if (accion == 1) {
+                    controller.colocarCartaEnTablero(context.getCurrentPlayer(), context.getBoard());
+                } else if (accion == 2) {
+                    controller.atacarConMinion(context.getCurrentPlayer(), context.getBoard());
+                } else if (accion == 3) {
+                    controller.terminarTurno();
+                    break;
+                } else {
+                    System.out.println("Acción no válida. Intente de nuevo.");
+                }
+            }
             if (context.getCurrentPlayer().getHealth() <= 0 || context.getOpponentPlayer().getHealth() <= 0) {
                 controller.finalizarJuego();
                 break;
             }
-            controller.terminarTurno();
-        }
-
-        // Generar HTML para las cartas del mazo
-        // generateDeckHtml(player1.getDeck(), "output/cards/player1");
-        // generateDeckHtml(player2.getDeck(), "output/cards/player2");
-    }
-
-    private static void generateDeckHtml(Deck deck, String outputDir) {
-        File dir = new File(outputDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        for (Card card : deck.getCards()) {
-            String outputPath = outputDir + "/" + card.getName().replaceAll(" ", "_") + ".html";
-            CardHtmlGenerator.generateCardHtml(card, outputPath);
         }
     }
 }

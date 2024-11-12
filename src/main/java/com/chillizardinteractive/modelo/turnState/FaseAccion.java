@@ -39,27 +39,31 @@ public class FaseAccion implements GameState {
 
         while (true) {
             System.out.println("Mano de " + currentPlayer.getName() + ": " + currentPlayer.getMano().toString());
-            System.out.println("Seleccione una carta para colocar en el tablero (1-" + currentPlayer.getMano().toString() + ") o 0 para terminar:");
+            System.out.println("Seleccione una carta para colocar en el tablero (1-" + currentPlayer.getMano().getCartasEnMano().size() + ") o 0 para terminar:");
             int cartaIndex = scanner.nextInt() - 1;
 
             if (cartaIndex == -1) {
                 break;
             }
 
-            Card cartaSeleccionada = currentPlayer.getMano().getCartaByIndex(cartaIndex);
+            try {
+                Card cartaSeleccionada = currentPlayer.getMano().getCartaByIndex(cartaIndex);
 
-            if (cartaSeleccionada instanceof MinionCard) {
-                System.out.println("Seleccione una posición para el minion (1-5):");
-                int posicion = scanner.nextInt() - 1;
+                if (cartaSeleccionada instanceof MinionCard) {
+                    System.out.println("Seleccione una posición para el minion (1-5):");
+                    int posicion = scanner.nextInt() - 1;
 
-                if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
-                    System.out.println("Minion colocado en la posición " + (posicion + 1));
-                    currentPlayer.getMano().removerCartasByIndex(cartaIndex);
+                    if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
+                        System.out.println("Minion colocado en la posición " + (posicion + 1));
+                        currentPlayer.getMano().removerCartasByIndex(cartaIndex);
+                    } else {
+                        System.out.println("Posición inválida o ya ocupada.");
+                    }
                 } else {
-                    System.out.println("Posición inválida o ya ocupada.");
+                    System.out.println("Carta no válida. Solo se pueden colocar minions.");
                 }
-            } else {
-                System.out.println("Carta no válida. Solo se pueden colocar minions.");
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
