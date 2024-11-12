@@ -33,7 +33,7 @@ public class GameController {
         context.iniciarTurno();
     }
 
-    public void faseCombate() {
+    public void faseAccion() {
         context.faseCombate();
     }
 
@@ -67,16 +67,15 @@ public class GameController {
 
     public void colocarCartaEnTablero(Player player, Board board) {
         mostrarMano(player);
-        view.mostrarMensaje("Seleccione una carta para colocar en el tablero (1-" + player.getMano().getCartasEnMano().size() + "): ");
+        view.mostrarMensaje("Seleccione una carta para colocar en el tablero (1-" + player.getMano().toString() + "): ");
         int cartaIndex = scanner.nextInt() - 1;
-        Card cartaSeleccionada = player.getMano().getCartasEnMano().get(cartaIndex);
-
+        Card cartaSeleccionada = player.getMano().get(cartaIndex);
         if (cartaSeleccionada instanceof MinionCard) {
             view.mostrarMensaje("Seleccione una posición para el minion (1-5): ");
             int posicion = scanner.nextInt() - 1;
             if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
                 view.mostrarMensaje("Minion colocado en la posición " + (posicion + 1));
-                player.getMano().getCartasEnMano().remove(cartaSeleccionada);
+                player.getMano().remove(cartaSeleccionada);
             } else {
                 view.mostrarError("Posición inválida o ya ocupada.");
             }
@@ -85,7 +84,7 @@ public class GameController {
             int posicion = scanner.nextInt() - 1;
             if (board.placeSpell((SpellCard) cartaSeleccionada, posicion)) {
                 view.mostrarMensaje("Hechizo colocado en la posición " + (posicion + 1));
-                player.getMano().getCartasEnMano().remove(cartaSeleccionada);
+                player.getMano().remove(cartaSeleccionada);
             } else {
                 view.mostrarError("Posición inválida o ya ocupada.");
             }

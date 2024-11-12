@@ -2,7 +2,7 @@ package com.chillizardinteractive.modelo.card;
 
 public class MinionCard extends Card {
     private final int attack;
-    private final int defense;
+    private int defense;
 
     public MinionCard(String name, String description, int nenCost, int attack, int defense, Rarity rarity) {
         super(name, description, nenCost, rarity);
@@ -16,6 +16,18 @@ public class MinionCard extends Card {
 
     public int getDefense() {
         return defense;
+    }
+
+    public void recibirDanio(int danio) {
+        this.defense -= danio;
+    }
+
+    public boolean estaMuerto() {
+        return defense <= 0;
+    }
+
+    public boolean hasTaunt() {
+        return description.contains("Taunt");
     }
 
     @Override

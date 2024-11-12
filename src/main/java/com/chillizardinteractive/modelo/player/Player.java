@@ -1,23 +1,26 @@
 package com.chillizardinteractive.modelo.player;
 
+import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.deck.Deck;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Player {
     private String name;
-    private int health;
+    private int vida;
     private int nenSpaces;
     private int nenPoints;
+    private Mano mano;
     private Deck deck;
-    private Mano manoJugador;
 
     public Player(String name) {
         this.name = name;
-        this.health = 30;
+        this.vida = 30;
         this.nenSpaces = 1;
         this.nenPoints = 1;
+        this.mano = new Mano();
         this.deck = new Deck(name + "'s Deck");
-        this.deck.initializeDeck("src/main/resources/decks.json"); // Inicializar el mazo desde el archivo JSON
-        this.manoJugador = new Mano();
     }
 
     public String getName() {
@@ -25,11 +28,7 @@ public class Player {
     }
 
     public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
+        return vida;
     }
 
     public int getNenSpaces() {
@@ -40,31 +39,26 @@ public class Player {
         return nenPoints;
     }
 
-    public void setNenPoints(int nenPoints) {
-        this.nenPoints = nenPoints;
+    public void incrementarNenPoints() {
+        this.nenPoints++;
+    }
+
+    public void recibirDanio(int danio) {
+        this.vida -= danio;
+    }
+
+    public Mano getMano() {
+        return mano;
     }
 
     public Deck getDeck() {
         return deck;
     }
 
-    public Mano getMano() {
-        return manoJugador;
-    }
-
-    public void setMano(Mano manoJugador) {
-        this.manoJugador = manoJugador;
-    }
-
-    public void shuffleDeck() {
-        deck.shuffle();
-    }
-
-    public void drawCard() {
-        if (deck.getCardList().isEmpty()) {
-            System.out.println(name + " no tiene más cartas en el mazo. Barajando el mazo...");
-            shuffleDeck();
+    public void robarCarta() {
+        Card carta = deck.sacarCarta();
+        if (carta != null) {
+            mano.agregarCartasMano(carta);
         }
-        // Lógica para robar una carta
     }
 }

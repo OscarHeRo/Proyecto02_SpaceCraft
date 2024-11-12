@@ -15,17 +15,25 @@ public class Mano {
         cartasEnMano.add(carta);
     }
 
+    public Card getCartaByIndex(int index) {
+        return cartasEnMano.get(index);
+    }
+
+    public void removerCartasByIndex(int index) {
+        cartasEnMano.remove(index);
+    }
+
     public List<Card> getCartasEnMano() {
         return cartasEnMano;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("[\n");
+        sb.append("Mano del jugador:\n");
         for (int i = 0; i < cartasEnMano.size(); i++) {
             sb.append((i + 1) + "._ " + cartasEnMano.get(i).getDescription() + "\n");
         }
-        sb.append("]");
         return sb.toString();
     }
 }

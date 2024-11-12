@@ -21,6 +21,8 @@ public class GameContext {
         this.players = new ArrayList<>();
         this.players.add(player1);
         this.players.add(player2);
+        this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
+        this.board = new Board(); // Asegúrate de inicializar board
     }
 
     public void setState(GameState state) {
@@ -72,7 +74,7 @@ public class GameContext {
     }
 
     public void autorizarAtaque() {
-        permisoParaAtaque = true;
+        this.permisoParaAtaque = true;
     }
 
     public Board getBoard() {
@@ -80,10 +82,14 @@ public class GameContext {
     }
 
     public void switchPlayer() {
-        if (currentPlayer == player1){
+        if (currentPlayer == player1) {
             currentPlayer = player2;
-        } else if (currentPlayer == player2){
+        } else {
             currentPlayer = player1;
         }
+    }
+
+    public Player getOpponentPlayer() {
+        return currentPlayer == player1 ? player2 : player1;
     }
 }

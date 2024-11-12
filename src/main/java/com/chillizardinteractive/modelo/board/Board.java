@@ -3,6 +3,7 @@ package com.chillizardinteractive.modelo.board;
 import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.card.MinionCard;
 import com.chillizardinteractive.modelo.card.SpellCard;
+import com.chillizardinteractive.modelo.player.Player;
 
 public class Board {
     private MinionCard[] minionSpaces;
@@ -14,7 +15,7 @@ public class Board {
     }
 
     public MinionCard[] getMinions() {
-        return minionSpaces.clone();;
+        return minionSpaces.clone();
     }
 
     public SpellCard[] getSpellSpaces() {
@@ -48,5 +49,22 @@ public class Board {
             sb.append((i + 1) + "._ " + (spellSpaces[i] == null ? "vacio" : spellSpaces[i].getDescription()) + "\n");
         }
         return sb.toString();
+    }
+
+    public MinionCard getMinion(int atacanteIndex) {
+        return minionSpaces[atacanteIndex];
+    }
+
+    public boolean hasTauntMinion(Player opponentPlayer) {
+        for (MinionCard minion : minionSpaces) {
+            if (minion != null && minion.hasTaunt()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void removeMinion(int objetivoIndex) {
+        minionSpaces[objetivoIndex] = null;
     }
 }
