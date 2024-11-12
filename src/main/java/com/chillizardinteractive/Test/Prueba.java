@@ -21,7 +21,5 @@ public class Prueba extends DueloDeCazadores{
     @Test
     void exodia(){
         System.out.println("Prueba: ");
-        Player player1 = new Player("Jugador 1");
-        Player player2 = new Player("Jugador 2");
     }
 }

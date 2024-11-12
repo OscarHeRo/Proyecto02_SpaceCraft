@@ -34,7 +34,7 @@ public class CardHtmlGenerator {
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
                 writer.write(template);
-                System.out.println("Archivo HTML generado: " + outputPath);
+                //System.out.println("Archivo HTML generado: " + outputPath);
             }
         } catch (IOException e) {
             e.printStackTrace();

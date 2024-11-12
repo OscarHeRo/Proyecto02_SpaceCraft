@@ -1,9 +1,14 @@
 package com.chillizardinteractive.modelo.turnState;
 
+import java.io.File;
+
+import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.card.Card;
-import com.chillizardinteractive.modelo.gameState.GameState;
+import com.chillizardinteractive.modelo.deck.Deck;
 import com.chillizardinteractive.modelo.gameState.GameContext;
+import com.chillizardinteractive.modelo.gameState.GameState;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.vista.CardHtmlGenerator;
 import com.chillizardinteractive.vista.GameView;
 
 public class InicioTurno implements GameState {
@@ -13,20 +18,23 @@ public class InicioTurno implements GameState {
         this.view = view;
     }
 
-    /**
-     * Inicio de turno: el jugador actual recibe una carta de la pila de su mazo.
-     * 
-     * Precondiciones:
-     * - El juego ha sido iniciado.
-     * - Se ha lanzado la moneda y se ha determinado el jugador actual.
-     */
+    @Override
+    public void iniciarJuego(GameContext context) {
+        view.mostrarError("No se puede iniciar el juego en el estado de inicio de turno.");
+    }
+
     @Override
     public void iniciarTurno(GameContext context) {
         view.mostrarMensaje("Iniciando turno del jugador actual...");
 
         Player currentPlayer = context.getCurrentPlayer();
-        Card drawnCard = currentPlayer.getDeck().sacarCarta();
 
+        // Agregar un espacio de nen y rellenar los puntos de nen
+        currentPlayer.incrementarNenSpaces();
+        currentPlayer.rellenarNenPoints();
+
+        // Robar una carta y ponerla en la mano del jugador actual
+        Card drawnCard = currentPlayer.getDeck().sacarCarta();
         if (drawnCard != null) {
             currentPlayer.getMano().agregarCartasMano(drawnCard);
             view.mostrarCartaRobada(currentPlayer.getName(), drawnCard.getDescription());
@@ -35,11 +43,6 @@ public class InicioTurno implements GameState {
         }
 
         context.setState(new FaseAccion(view));
-    }
-
-    @Override
-    public void iniciarJuego(GameContext context) {
-        view.mostrarError("No se puede iniciar el juego en el estado de inicio de turno.");
     }
 
     @Override

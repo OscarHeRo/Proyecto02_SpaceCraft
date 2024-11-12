@@ -23,8 +23,14 @@ public class TerminarJuego implements GameState {
         mostrarResumenJugador(player1);
         mostrarResumenJugador(player2);
 
+        // El jugador ganador es
+        Player ganador = player1.getHealth() <= 0? player2 : player1;
+        view.mostrarMensaje("El ganador del juego es " + ganador.getName() + "!");
+
         // Mensaje final de despedida
         view.mostrarMensaje("Gracias por jugar. ¡Esperamos que hayas disfrutado!");
+
+        
     }
 
     private void mostrarResumenJugador(Player player) {

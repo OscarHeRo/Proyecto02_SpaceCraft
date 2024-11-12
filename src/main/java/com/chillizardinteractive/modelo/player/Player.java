@@ -14,14 +14,15 @@ public class Player {
     private Mano mano;
     private Deck deck;
 
-    public Player(String name) {
+    public Player(String name, Deck deck) {
         this.name = name;
         this.vida = 30;
         this.nenSpaces = 1;
         this.nenPoints = 1;
         this.mano = new Mano();
-        this.deck = new Deck(name + "'s Deck");
+        this.deck = deck;
     }
+
 
     public String getName() {
         return name;
@@ -60,5 +61,15 @@ public class Player {
         if (carta != null) {
             mano.agregarCartasMano(carta);
         }
+    }
+
+
+    public void incrementarNenSpaces() {
+        this.nenSpaces++;
+    }
+
+
+    public void rellenarNenPoints() {
+        this.nenPoints = nenSpaces;
     }
 }
