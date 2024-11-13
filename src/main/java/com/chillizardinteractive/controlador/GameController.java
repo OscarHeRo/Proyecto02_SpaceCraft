@@ -76,7 +76,7 @@ public class GameController {
     }
 
     public void mostrarMano(Player player) {
-        view.mostrarMensaje("Mano de " + player.getName() + ": " + player.getMano().toString());
+        view.mostrarMensajePrivado(player.getName(),"Mano de " + player.getName() + ": " + player.getMano().toString());
     }
 
     public void colocarCartaEnTablero(Player player, Board board) {
