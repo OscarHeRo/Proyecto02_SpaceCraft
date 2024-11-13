@@ -5,7 +5,6 @@ import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.card.MinionCard;
 import com.chillizardinteractive.modelo.card.SpellCard;
 import com.chillizardinteractive.modelo.gameState.GameContext;
-import com.chillizardinteractive.modelo.gameState.TerminarJuego;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
 
@@ -144,7 +143,7 @@ public class GameController {
             } else {
                 context.getOpponentPlayer().recibirDanio(atacante.getAttack());
                 view.mostrarMensaje("El Hunter ha recibido " + atacante.getAttack() + " puntos de daño.");
-                if (context.getOpponentPlayer().getVida() <= 0) {
+                if (context.getOpponentPlayer().getHealth() <= 0) {
                     context.setState(new TerminarJuego(view));
                     context.finalizarJuego();
                 }

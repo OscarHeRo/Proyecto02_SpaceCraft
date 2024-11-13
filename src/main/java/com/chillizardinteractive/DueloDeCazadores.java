@@ -2,7 +2,6 @@ package com.chillizardinteractive;
 
 import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.gameState.GameContext;
-import com.chillizardinteractive.modelo.gameState.InicioJuego;
 import com.chillizardinteractive.vista.GameView;
 
 import java.util.Scanner;
