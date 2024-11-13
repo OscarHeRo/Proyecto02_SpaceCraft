@@ -21,8 +21,8 @@ public class GameContext {
         this.players = new ArrayList<>();
         if (player1 != null) this.players.add(player1);
         if (player2 != null) this.players.add(player2);
-        this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
-        this.board = new Board(); // Asegúrate de inicializar board
+        this.currentPlayer = player1;
+        this.board = new Board();
     }
 
     public void setState(GameState state) {
@@ -37,8 +37,8 @@ public class GameContext {
         currentState.lanzarMoneda(this);
     }
 
+    // Cambiado para evitar duplicación de cartas
     public void iniciarTurno() {
-        currentPlayer.robarCarta();
         currentState.iniciarTurno(this);
     }
 
