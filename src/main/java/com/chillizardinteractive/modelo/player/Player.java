@@ -3,9 +3,6 @@ package com.chillizardinteractive.modelo.player;
 import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.deck.Deck;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Player {
     private String name;
     private int vida;
@@ -15,6 +12,9 @@ public class Player {
     private Deck deck;
 
     public Player(String name, Deck deck) {
+        if (deck == null) {
+            throw new IllegalArgumentException("El mazo del jugador no puede ser nulo.");
+        }
         this.name = name;
         this.vida = 30;
         this.nenSpaces = 1;
@@ -22,7 +22,6 @@ public class Player {
         this.mano = new Mano();
         this.deck = deck;
     }
-
 
     public String getName() {
         return name;
@@ -46,6 +45,9 @@ public class Player {
 
     public void recibirDanio(int danio) {
         this.vida -= danio;
+        if (this.vida < 0) {
+            this.vida = 0; // Prevent vida from going negative
+        }
     }
 
     public Mano getMano() {
@@ -57,17 +59,20 @@ public class Player {
     }
 
     public void robarCarta() {
+        if (deck == null) {
+            throw new IllegalStateException("El jugador no tiene mazo para robar cartas.");
+        }
         Card carta = deck.sacarCarta();
         if (carta != null) {
             mano.agregarCartasMano(carta);
+        } else {
+            System.out.println("El mazo está vacío; no se puede robar carta.");
         }
     }
-
 
     public void incrementarNenSpaces() {
         this.nenSpaces++;
     }
-
 
     public void rellenarNenPoints() {
         this.nenPoints = nenSpaces;

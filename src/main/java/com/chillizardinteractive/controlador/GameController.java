@@ -7,6 +7,7 @@ import com.chillizardinteractive.modelo.card.SpellCard;
 import com.chillizardinteractive.modelo.gameState.GameContext;
 import com.chillizardinteractive.modelo.gameState.TerminarJuego;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.modelo.turnState.InicioTurno;
 import com.chillizardinteractive.vista.GameView;
 
 import java.util.Scanner;
@@ -36,7 +37,7 @@ public class GameController {
     }
 
     public void iniciarTurno() {
-        context.iniciarTurno();
+    context.setState(new InicioTurno(view)); 
         startTurnTimer();
     }
 
@@ -85,39 +86,32 @@ public class GameController {
             view.mostrarError("La mano está vacía. No se puede colocar ninguna carta en el tablero.");
             return;
         }
-
+    
         mostrarMano(player);
         view.mostrarMensaje("Seleccione una carta para colocar en el tablero (1-" + player.getMano().getCartasEnMano().size() + "): ");
         int cartaIndex = scanner.nextInt() - 1;
-
+    
         if (cartaIndex < 0 || cartaIndex >= player.getMano().getCartasEnMano().size()) {
             view.mostrarError("Índice de carta no válido.");
             return;
         }
-
-        Card cartaSeleccionada = player.getMano().getCartasEnMano().get(cartaIndex);
+    
+        Card cartaSeleccionada = player.getMano().getCartaByIndex(cartaIndex); // Obtiene la carta seleccionada
         if (cartaSeleccionada instanceof MinionCard) {
             view.mostrarMensaje("Seleccione una posición para el minion (1-5): ");
             int posicion = scanner.nextInt() - 1;
+    
             if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
+                player.getMano().removerCartasByIndex(cartaIndex); // Usamos el método para remover la carta
                 view.mostrarMensaje("Minion colocado en la posición " + (posicion + 1));
-                player.getMano().getCartasEnMano().remove(cartaSeleccionada);
             } else {
-                view.mostrarError("Posición inválida o ya ocupada.");
-            }
-        } else if (cartaSeleccionada instanceof SpellCard) {
-            view.mostrarMensaje("Seleccione una posición para el hechizo (1-5): ");
-            int posicion = scanner.nextInt() - 1;
-            if (board.placeSpell((SpellCard) cartaSeleccionada, posicion)) {
-                view.mostrarMensaje("Hechizo colocado en la posición " + (posicion + 1));
-                player.getMano().getCartasEnMano().remove(cartaSeleccionada);
-            } else {
-                view.mostrarError("Posición inválida o ya ocupada.");
+                view.mostrarError("No se pudo colocar el minion en esa posición.");
             }
         } else {
-            view.mostrarError("Carta no válida.");
+            view.mostrarError("La carta seleccionada no es un Minion.");
         }
     }
+    
 
     public void atacarConMinion(Player player, Board board) {
         mostrarMano(player);

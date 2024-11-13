@@ -38,6 +38,7 @@ public class GameContext {
     }
 
     public void iniciarTurno() {
+        currentPlayer.robarCarta();
         currentState.iniciarTurno(this);
     }
 

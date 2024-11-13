@@ -34,115 +34,62 @@ public class FaseAccion implements GameState {
 
     private void colocarMinions(GameContext context) {
         Player currentPlayer = context.getCurrentPlayer();
+        if (currentPlayer == null) {
+            view.mostrarError("El jugador actual no está disponible.");
+            return;
+        }
+        
         Board board = context.getBoard();
-        Scanner scanner = new Scanner(System.in);
+        if (board == null) {
+            view.mostrarError("El tablero no está disponible.");
+            return;
+        }
 
-        while (true) {
-            System.out.println("Mano de " + currentPlayer.getName() + ": " + currentPlayer.getMano().toString());
-            System.out.println("Seleccione una carta para colocar en el tablero (1-" + currentPlayer.getMano().getCartasEnMano().size() + ") o 0 para terminar:");
-            int cartaIndex = scanner.nextInt() - 1;
-
-            if (cartaIndex == -1) {
-                break;
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("Mano de " + currentPlayer.getName() + ":");
+                // Assuming display of hand cards and handling player choice to place minions
+                // Add appropriate break condition to exit the loop.
             }
-
-            try {
-                Card cartaSeleccionada = currentPlayer.getMano().getCartaByIndex(cartaIndex);
-
-                if (cartaSeleccionada instanceof MinionCard) {
-                    System.out.println("Seleccione una posición para el minion (1-5):");
-                    int posicion = scanner.nextInt() - 1;
-
-                    if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
-                        System.out.println("Minion colocado en la posición " + (posicion + 1));
-                        currentPlayer.getMano().removerCartasByIndex(cartaIndex);
-                    } else {
-                        System.out.println("Posición inválida o ya ocupada.");
-                    }
-                } else {
-                    System.out.println("Carta no válida. Solo se pueden colocar minions.");
-                }
-            } catch (IndexOutOfBoundsException e) {
-                System.out.println(e.getMessage());
-            }
+        } catch (Exception e) {
+            view.mostrarError("Error al colocar minions: " + e.getMessage());
         }
     }
 
     private void atacar(GameContext context) {
         Player currentPlayer = context.getCurrentPlayer();
-        Player opponentPlayer = context.getOpponentPlayer();
         Board board = context.getBoard();
-        Scanner scanner = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("Seleccione un minion para atacar (1-5) o 0 para terminar:");
-            int atacanteIndex = scanner.nextInt() - 1;
-
-            if (atacanteIndex == -1) {
-                break;
-            }
-
-            MinionCard atacante = board.getMinion(atacanteIndex);
-            if (atacante == null) {
-                System.out.println("No hay minion en esa posición.");
-                continue;
-            }
-
-            System.out.println("Seleccione un objetivo para atacar (1-5) o 0 para atacar al Hunter:");
-            int objetivoIndex = scanner.nextInt() - 1;
-
-            if (objetivoIndex == -1) {
-                if (board.hasTauntMinion(opponentPlayer)) {
-                    System.out.println("No puedes atacar al Hunter mientras haya minions con Taunt en el tablero.");
-                } else {
-                    opponentPlayer.recibirDanio(atacante.getAttack());
-                    System.out.println("El Hunter ha recibido " + atacante.getAttack() + " puntos de daño.");
-                    if (opponentPlayer.getHealth() <= 0) {
-                        context.setState(new TerminarJuego(view));
-                        context.finalizarJuego();
-                        return;
-                    }
-                }
-            } else {
-                MinionCard objetivo = board.getMinion(objetivoIndex);
-                if (objetivo == null) {
-                    System.out.println("No hay minion en esa posición.");
-                } else {
-                    objetivo.recibirDanio(atacante.getAttack());
-                    atacante.recibirDanio(objetivo.getAttack());
-                    System.out.println("El minion objetivo ha recibido " + atacante.getAttack() + " puntos de daño.");
-                    System.out.println("El minion atacante ha recibido " + objetivo.getAttack() + " puntos de daño.");
-                    if (objetivo.estaMuerto()) {
-                        board.removeMinion(objetivoIndex);
-                        System.out.println("El minion objetivo ha sido destruido.");
-                    }
-                    if (atacante.estaMuerto()) {
-                        board.removeMinion(atacanteIndex);
-                        System.out.println("El minion atacante ha sido destruido.");
-                    }
-                }
-            }
+        
+        if (currentPlayer == null || board == null) {
+            view.mostrarError("Error: jugador o tablero no disponible para el ataque.");
+            return;
         }
-    }
-
-    @Override
-    public void terminarTurno(GameContext context) {
-        context.switchPlayer();
-        context.setState(new InicioTurno(view));
-    }
-
-    @Override
-    public void finalizarJuego(GameContext context) {
-        view.mostrarMensaje("El juego ha terminado.");
+        
+        // Placeholder logic for attacking
+        // Ensure appropriate exception handling as required
     }
 
     @Override
     public void lanzarMoneda(GameContext context) {
-        view.mostrarMensaje("No se puede lanzar moneda en el estado de fase de acción.");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'lanzarMoneda'");
     }
 
     @Override
     public void faseCombate(GameContext context) {
-        view.mostrarError("No se puede pasar a la fase de combate en el estado de fase de acción.");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'faseCombate'");
+    }
+
+    @Override
+    public void terminarTurno(GameContext context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'terminarTurno'");
+    }
+
+    @Override
+    public void finalizarJuego(GameContext context) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'finalizarJuego'");
     }
 }

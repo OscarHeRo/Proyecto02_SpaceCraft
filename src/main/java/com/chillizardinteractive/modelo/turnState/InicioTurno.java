@@ -57,8 +57,11 @@ public class InicioTurno implements GameState {
 
     @Override
     public void terminarTurno(GameContext context) {
-        view.mostrarError("No se puede terminar el turno en el estado de inicio de turno.");
+        view.mostrarMensaje("Terminando el turno desde el estado de inicio de turno...");
+        TerminarTurno terminarTurno = new TerminarTurno(view);
+        terminarTurno.terminarTurno(context);
     }
+    
 
     @Override
     public void finalizarJuego(GameContext context) {

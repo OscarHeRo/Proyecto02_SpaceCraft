@@ -16,9 +16,18 @@ public class LanzamientoMoneda implements GameState {
     public void lanzarMoneda(GameContext context) {
         view.mostrarMensaje("Lanzando moneda para determinar el primer jugador...");
 
-        // Suponiendo que el jugador 1 elige cara
-        String eleccionJugador1 = "cara"; // "cara" o "cruz"
+        if (context.getPlayer1() == null || context.getPlayer2() == null) {
+            view.mostrarError("Error: No se han inicializado ambos jugadores.");
+            return;
+        }
+
+        String eleccionJugador1 = "cara"; // Suponiendo que el jugador 1 elige "cara"
         String resultado = Moneda.lanzarMoneda();
+        
+        if (resultado == null) {
+            view.mostrarError("Error en el lanzamiento de moneda: resultado no disponible.");
+            return;
+        }
 
         if (resultado.equals(eleccionJugador1)) {
             view.mostrarMensaje("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
@@ -44,16 +53,19 @@ public class LanzamientoMoneda implements GameState {
 
     @Override
     public void faseCombate(GameContext context) {
-        view.mostrarError("No se puede pasar a la fase de combate en el estado de lanzamiento de moneda.");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'faseCombate'");
     }
 
     @Override
     public void terminarTurno(GameContext context) {
-        view.mostrarError("No se puede terminar el turno en el estado de lanzamiento de moneda.");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'terminarTurno'");
     }
 
     @Override
     public void finalizarJuego(GameContext context) {
-        view.mostrarError("No se puede finalizar el juego en el estado de lanzamiento de moneda.");
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'finalizarJuego'");
     }
 }
