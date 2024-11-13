@@ -87,35 +87,15 @@ public class Deck {
         return cardStack.isEmpty() ? null : cardStack.pop();
     }
 
-    public void showDeck() {
-        System.out.println("Deck:");
-        if (cardStack.isEmpty()) {
-            System.out.println("El mazo está vacío.");
-            return;
-        }
-        for (Card card : cardStack) {
-            if (card == null) {
-                System.out.println("Carta nula encontrada en el mazo.");
-            } else {
-                System.out.println("- " + card.getDescription());
-            }
-        }
-    }
-
-    public List<Card> getCardList() {
-        return new ArrayList<>(cardStack);
-    }
-
     public List<Card> getCards() {
         return originalDeck;
     }
 
-    public String  deckToString() {
-
-        String deckString = "";
+    public String deckToString() {
+        StringBuilder deckString = new StringBuilder();
         for (Card card : cardStack) {
-            deckString += card.getDescription() + "\n";
+            deckString.append(card.getDescription()).append("\n");
         }
-        return deckString;
+        return deckString.toString();
     }
 }

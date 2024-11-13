@@ -1,6 +1,5 @@
 package com.chillizardinteractive.modelo.gameState;
 
-import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
 
@@ -13,30 +12,15 @@ public class TerminarJuego implements GameState {
 
     @Override
     public void finalizarJuego(GameContext context) {
-        Player player1 = context.getPlayer1();
-        Player player2 = context.getPlayer2();
-
-        // Mostrar un mensaje de fin de juego
-        view.mostrarMensaje("El juego ha terminado. Mostrando resumen de la partida...");
-
-        // Mostrar resumen de cada jugador
-        mostrarResumenJugador(player1);
-        mostrarResumenJugador(player2);
-
-        // El jugador ganador es
-        Player ganador = player1.getHealth() <= 0? player2 : player1;
-        view.mostrarMensaje("El ganador del juego es " + ganador.getName() + "!");
-
-        // Mensaje final de despedida
-        view.mostrarMensaje("Gracias por jugar. ¡Esperamos que hayas disfrutado!");
-
-        
+        view.mostrarMensajePublico("El juego ha terminado.");
+        mostrarResumenJugador(context.getPlayer1());
+        mostrarResumenJugador(context.getPlayer2());
     }
 
     private void mostrarResumenJugador(Player player) {
-        view.mostrarMensaje("Resumen para " + player.getName() + ":");
-        view.mostrarMensaje(" - Salud restante: " + player.getHealth());
-        view.mostrarMensaje(" - Puntos Nen restantes: " + player.getNenPoints());
+        view.mostrarMensajePrivado(player.getName(), "Resumen para " + player.getName() + ":");
+        view.mostrarMensajePrivado(player.getName(), " - Salud restante: " + player.getHealth());
+        view.mostrarMensajePrivado(player.getName(), " - Puntos Nen restantes: " + player.getNenPoints());
         // Aquí se pueden agregar más detalles si es necesario
     }
 
@@ -53,16 +37,18 @@ public class TerminarJuego implements GameState {
 
     @Override
     public void iniciarTurno(GameContext context) {
-        view.mostrarError("El juego ya ha terminado. No se puede iniciar un turno.");
+        view.mostrarError("El juego ya ha terminado. No se puede iniciar el turno.");
     }
 
     @Override
     public void faseCombate(GameContext context) {
-        view.mostrarError("El juego ya ha terminado. No se puede entrar en fase de combate.");
+        view.mostrarError("El juego ya ha terminado. No se puede pasar a la fase de combate.");
     }
 
     @Override
     public void terminarTurno(GameContext context) {
         view.mostrarError("El juego ya ha terminado. No se puede terminar el turno.");
     }
+
+
 }

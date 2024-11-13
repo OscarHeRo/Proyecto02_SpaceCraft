@@ -1,16 +1,32 @@
 package com.chillizardinteractive;
 
 import com.chillizardinteractive.controlador.GameController;
+import com.chillizardinteractive.modelo.deck.Deck;
 import com.chillizardinteractive.modelo.gameState.GameContext;
-import com.chillizardinteractive.modelo.gameState.InicioJuego;
+import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
 
 import java.util.Scanner;
 
 public class DueloDeCazadores {
     public static void main(String[] args) {
+        // Crear la vista del juego
         GameView view = new GameView();
-        GameContext context = new GameContext(null, null, new InicioJuego(view));
+
+        // Inicializar los mazos desde el archivo decks.json
+        Deck deck1 = new Deck("Mazo1");
+        Deck deck2 = new Deck("Mazo2");
+        deck1.initializeDeck("src/main/resources/decks.json");
+        deck2.initializeDeck("src/main/resources/decks.json");
+
+        // Crear los jugadores con sus mazos
+        Player player1 = new Player("Jugador 1", deck1);
+        Player player2 = new Player("Jugador 2", deck2);
+
+        // Crear el contexto del juego con los jugadores y la vista
+        GameContext context = new GameContext(player1, player2, view);
+
+        // Crear el controlador del juego con el contexto y la vista
         GameController controller = new GameController(context, view);
 
         // Iniciar el juego

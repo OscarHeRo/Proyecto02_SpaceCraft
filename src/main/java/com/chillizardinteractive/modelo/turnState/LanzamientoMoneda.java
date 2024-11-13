@@ -14,17 +14,17 @@ public class LanzamientoMoneda implements GameState {
 
     @Override
     public void lanzarMoneda(GameContext context) {
-        view.mostrarMensaje("Lanzando moneda para determinar el primer jugador...");
+        view.mostrarMensajePublico("Lanzando moneda para determinar el primer jugador...");
 
         // Suponiendo que el jugador 1 elige cara
         String eleccionJugador1 = "cara"; // "cara" o "cruz"
         String resultado = Moneda.lanzarMoneda();
 
         if (resultado.equals(eleccionJugador1)) {
-            view.mostrarMensaje("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
+            view.mostrarMensajePublico("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
             context.setCurrentPlayer(context.getPlayer1());
         } else {
-            view.mostrarMensaje("Jugador 2 gana el lanzamiento de moneda y comienza primero.");
+            view.mostrarMensajePublico("Jugador 2 gana el lanzamiento de moneda y comienza primero.");
             context.setCurrentPlayer(context.getPlayer2());
         }
 
@@ -56,4 +56,5 @@ public class LanzamientoMoneda implements GameState {
     public void finalizarJuego(GameContext context) {
         view.mostrarError("No se puede finalizar el juego en el estado de lanzamiento de moneda.");
     }
+
 }

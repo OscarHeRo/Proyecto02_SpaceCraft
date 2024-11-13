@@ -25,7 +25,8 @@ public class FaseAccion implements GameState {
 
     @Override
     public void iniciarTurno(GameContext context) {
-        view.mostrarMensaje("Fase de acción. Los jugadores pueden colocar minions en el tablero y atacar.");
+        Player currentPlayer = context.getCurrentPlayer();
+        view.mostrarMensajePrivado(currentPlayer.getName(), "Fase de acción. Puedes colocar minions en el tablero y atacar.");
         colocarMinions(context);
         atacar(context);
         context.setState(new TerminarTurno(view));
@@ -36,23 +37,18 @@ public class FaseAccion implements GameState {
         Player currentPlayer = context.getCurrentPlayer();
         Board board = context.getBoard();
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("Mano de " + currentPlayer.getName() + ": " + currentPlayer.getMano().toString());
             System.out.println("Seleccione una carta para colocar en el tablero (1-" + currentPlayer.getMano().getCartasEnMano().size() + ") o 0 para terminar:");
             int cartaIndex = scanner.nextInt() - 1;
-
             if (cartaIndex == -1) {
                 break;
             }
-
             try {
                 Card cartaSeleccionada = currentPlayer.getMano().getCartaByIndex(cartaIndex);
-
                 if (cartaSeleccionada instanceof MinionCard) {
                     System.out.println("Seleccione una posición para el minion (1-5):");
                     int posicion = scanner.nextInt() - 1;
-
                     if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
                         System.out.println("Minion colocado en la posición " + (posicion + 1));
                         currentPlayer.getMano().removerCartasByIndex(cartaIndex);
@@ -73,24 +69,19 @@ public class FaseAccion implements GameState {
         Player opponentPlayer = context.getOpponentPlayer();
         Board board = context.getBoard();
         Scanner scanner = new Scanner(System.in);
-
         while (true) {
             System.out.println("Seleccione un minion para atacar (1-5) o 0 para terminar:");
             int atacanteIndex = scanner.nextInt() - 1;
-
             if (atacanteIndex == -1) {
                 break;
             }
-
             MinionCard atacante = board.getMinion(atacanteIndex);
             if (atacante == null) {
                 System.out.println("No hay minion en esa posición.");
                 continue;
             }
-
             System.out.println("Seleccione un objetivo para atacar (1-5) o 0 para atacar al Hunter:");
             int objetivoIndex = scanner.nextInt() - 1;
-
             if (objetivoIndex == -1) {
                 if (board.hasTauntMinion(opponentPlayer)) {
                     System.out.println("No puedes atacar al Hunter mientras haya minions con Taunt en el tablero.");
@@ -133,16 +124,17 @@ public class FaseAccion implements GameState {
 
     @Override
     public void finalizarJuego(GameContext context) {
-        view.mostrarMensaje("El juego ha terminado.");
+        view.mostrarMensajePublico("El juego ha terminado.");
     }
 
     @Override
     public void lanzarMoneda(GameContext context) {
-        view.mostrarMensaje("No se puede lanzar moneda en el estado de fase de acción.");
+        view.mostrarMensajePublico("No se puede lanzar moneda en el estado de fase de acción.");
     }
 
     @Override
     public void faseCombate(GameContext context) {
         view.mostrarError("No se puede pasar a la fase de combate en el estado de fase de acción.");
     }
+
 }

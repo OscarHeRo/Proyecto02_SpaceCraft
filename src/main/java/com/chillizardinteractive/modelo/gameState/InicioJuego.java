@@ -1,7 +1,5 @@
 package com.chillizardinteractive.modelo.gameState;
 
-import java.io.File;
-
 import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.deck.Deck;
@@ -9,6 +7,15 @@ import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.modelo.turnState.LanzamientoMoneda;
 import com.chillizardinteractive.vista.CardHtmlGenerator;
 import com.chillizardinteractive.vista.GameView;
+
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class InicioJuego implements GameState {
     private GameView view;
@@ -19,17 +26,17 @@ public class InicioJuego implements GameState {
 
     @Override
     public void iniciarJuego(GameContext context) {
-        view.mostrarMensaje("Iniciando el juego...");
+        view.mostrarMensajePublico("Iniciando el juego...");
 
         // Inicializar los mazos desde el archivo decks.json
-        Deck deck1 = new Deck("Mazo1");
-        Deck deck2 = new Deck("Mazo2");
-        deck1.initializeDeck("src/main/resources/decks.json");
-        deck2.initializeDeck("src/main/resources/decks.json");
+        Deck deck = new Deck("Mazo1");
+        deck.initializeDeck("src/main/resources/decks.json");
 
-        // Crear jugadores con sus mazos
-        Player player1 = new Player("Jugador 1", deck1);
-        Player player2 = new Player("Jugador 2", deck2);
+        // Crear jugadores con el mismo mazo
+        Player player1 = context.getPlayer1();
+        Player player2 = context.getPlayer2();
+        player1.setDeck(deck);
+        player2.setDeck(deck);
 
         // Configurar jugadores con un espacio de nen y un punto de nen
         player1.incrementarNenPoints();
@@ -44,8 +51,6 @@ public class InicioJuego implements GameState {
         generateDeckHtml(player2.getDeck(), "output/cards/player2");
 
         // Configurar el contexto del juego con los jugadores y el estado inicial
-        context.setPlayer1(player1);
-        context.setPlayer2(player2);
         context.setCurrentPlayer(player1);
         context.setState(new LanzamientoMoneda(view));
     }

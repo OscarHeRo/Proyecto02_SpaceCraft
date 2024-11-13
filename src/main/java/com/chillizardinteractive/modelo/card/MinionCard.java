@@ -20,6 +20,7 @@ public class MinionCard extends Card {
 
     public void recibirDanio(int danio) {
         this.defense -= danio;
+        System.out.println(getName() + " ha recibido " + danio + " puntos de daño. Defensa restante: " + this.defense);
     }
 
     public boolean estaMuerto() {
@@ -38,5 +39,15 @@ public class MinionCard extends Card {
     @Override
     public void playEffect() {
         System.out.println(getDescription() + " ha sido jugado.");
+    }
+
+  
+    public void receiveDamage(int damage) {
+        recibirDanio(damage);
+    }
+
+ 
+    public boolean isDead() {
+        return estaMuerto();
     }
 }

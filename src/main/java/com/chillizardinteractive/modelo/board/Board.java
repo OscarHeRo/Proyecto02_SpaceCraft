@@ -67,4 +67,28 @@ public class Board {
     public void removeMinion(int objetivoIndex) {
         minionSpaces[objetivoIndex] = null;
     }
+
+    public boolean attackWithMinion(int atacanteIndex, int objetivoIndex) {
+        MinionCard atacante = minionSpaces[atacanteIndex];
+        if (atacante == null) {
+            return false;
+        }
+
+        MinionCard objetivo = minionSpaces[objetivoIndex];
+        if (objetivo == null) {
+            return false;
+        }
+
+        objetivo.receiveDamage(atacante.getAttack());
+        atacante.receiveDamage(objetivo.getAttack());
+
+        if (objetivo.isDead()) {
+            removeMinion(objetivoIndex);
+        }
+        if (atacante.isDead()) {
+            removeMinion(atacanteIndex);
+        }
+
+        return true;
+    }
 }

@@ -2,6 +2,8 @@ package com.chillizardinteractive.modelo.gameState;
 
 import com.chillizardinteractive.modelo.board.Board;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.vista.GameView;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,16 +15,30 @@ public class GameContext {
     private List<Player> players;
     private boolean permisoParaAtaque = false;
     private Board board;
+    private int turnTime;
 
-    public GameContext(Player player1, Player player2, GameState initialState) {
+    public GameContext(Player player1, Player player2, GameView view) {
         this.player1 = player1;
         this.player2 = player2;
-        this.currentState = initialState;
+        this.currentState = new InicioJuego(view);
         this.players = new ArrayList<>();
-        if (player1 != null) this.players.add(player1);
-        if (player2 != null) this.players.add(player2);
-        this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
-        this.board = new Board(); // Asegúrate de inicializar board
+        this.players.add(player1);
+        this.players.add(player2);
+        this.currentPlayer = player1;
+        this.board = new Board();
+        this.turnTime = 60; // Tiempo de turno inicial en segundos
+    }
+
+    public GameContext(Player player1, Player player2, InicioJuego inicioJuego) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.currentState = inicioJuego;
+        this.players = new ArrayList<>();
+        this.players.add(player1);
+        this.players.add(player2);
+        this.currentPlayer = player1;
+        this.board = new Board();
+        this.turnTime = 60; // Tiempo de turno inicial en segundos
     }
 
     public void setState(GameState state) {
@@ -57,22 +73,8 @@ public class GameContext {
         return player1;
     }
 
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
-        if (!players.contains(player1)) {
-            players.add(player1);
-        }
-    }
-
     public Player getPlayer2() {
         return player2;
-    }
-
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
-        if (!players.contains(player2)) {
-            players.add(player2);
-        }
     }
 
     public void setCurrentPlayer(Player player) {
@@ -104,6 +106,29 @@ public class GameContext {
     }
 
     public Player getOpponentPlayer() {
-        return currentPlayer == player1 ? player2 : player1;
+        if (currentPlayer == player1) {
+            return player2;
+        } else {
+            return player1;
+        }
     }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void decrementTurnTime() {
+        if (turnTime > 0) {
+            turnTime--;
+        }
+    }
+
+    public int getTurnTime() {
+        return turnTime;
+    }
+
 }
