@@ -61,11 +61,12 @@ public class Player {
     }
 
     public void robarCarta() {
-        if (deck != null) {
-            Card carta = deck.sacarCarta();
-            if (carta != null) {
-                mano.agregarCartasMano(carta);
-            }
+        if (deck == null) {
+            throw new IllegalStateException("El jugador no tiene un mazo asignado.");
+        }
+        Card carta = deck.sacarCarta();
+        if (carta != null) {
+            mano.agregarCartasMano(carta);
         }
     }
 
