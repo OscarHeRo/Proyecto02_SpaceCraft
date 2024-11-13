@@ -66,10 +66,11 @@ public class GameController {
     public void mostrarCartaRobada(String nombreJugador, String descripcionCarta) {
         view.mostrarCartaRobada(nombreJugador, descripcionCarta);
     }
-
+/* 
     public void mostrarMensaje(String mensaje) {
         view.mostrarMensaje(mensaje);
     }
+*/
 
     public void mostrarError(String mensaje) {
         view.mostrarError(mensaje);
@@ -86,7 +87,7 @@ public class GameController {
         }
 
         mostrarMano(player);
-        view.mostrarMensaje("Seleccione una carta para colocar en el tablero (1-" + player.getMano().getCartasEnMano().size() + "): ");
+        view.mostrarMensajePrivado(player.getName(), "Seleccione una carta para colocar en el tablero (1-" + player.getMano().getCartasEnMano().size() + "): ");
         int cartaIndex = scanner.nextInt() - 1;
 
         if (cartaIndex < 0 || cartaIndex >= player.getMano().getCartasEnMano().size()) {
@@ -96,19 +97,19 @@ public class GameController {
 
         Card cartaSeleccionada = player.getMano().getCartasEnMano().get(cartaIndex);
         if (cartaSeleccionada instanceof MinionCard) {
-            view.mostrarMensaje("Seleccione una posición para el minion (1-5): ");
+            view.mostrarMensajePrivado(player.getName() ,"Seleccione una posición para el minion (1-5): ");
             int posicion = scanner.nextInt() - 1;
             if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
-                view.mostrarMensaje("Minion colocado en la posición " + (posicion + 1));
+                view.mostrarMensajePrivado(player.getName() ,"Minion colocado en la posición " + (posicion + 1));
                 player.getMano().getCartasEnMano().remove(cartaSeleccionada);
             } else {
                 view.mostrarError("Posición inválida o ya ocupada.");
             }
         } else if (cartaSeleccionada instanceof SpellCard) {
-            view.mostrarMensaje("Seleccione una posición para el hechizo (1-5): ");
+            view.mostrarMensajePrivado(player.getName() ,"Seleccione una posición para el hechizo (1-5): ");
             int posicion = scanner.nextInt() - 1;
             if (board.placeSpell((SpellCard) cartaSeleccionada, posicion)) {
-                view.mostrarMensaje("Hechizo colocado en la posición " + (posicion + 1));
+                view.mostrarMensajePrivado(player.getName() , "Hechizo colocado en la posición " + (posicion + 1));
                 player.getMano().getCartasEnMano().remove(cartaSeleccionada);
             } else {
                 view.mostrarError("Posición inválida o ya ocupada.");
@@ -120,7 +121,7 @@ public class GameController {
 
     public void atacarConMinion(Player player, Board board) {
         mostrarMano(player);
-        view.mostrarMensaje("Seleccione un minion para atacar (1-5): ");
+        view.mostrarMensajePrivado(player.getName() ,"Seleccione un minion para atacar (1-5): ");
         int atacanteIndex = scanner.nextInt() - 1;
 
         if (atacanteIndex < 0 || atacanteIndex >= board.getMinions().length) {
@@ -134,7 +135,7 @@ public class GameController {
             return;
         }
 
-        view.mostrarMensaje("Seleccione un objetivo para atacar (1-5) o 0 para atacar al Hunter: ");
+        view.mostrarMensajePrivado(player.getName(), "Seleccione un objetivo para atacar (1-5) o 0 para atacar al Hunter: ");
         int objetivoIndex = scanner.nextInt() - 1;
 
         if (objetivoIndex == -1) {
@@ -142,9 +143,8 @@ public class GameController {
                 view.mostrarError("No puedes atacar al Hunter mientras haya minions con Taunt en el tablero.");
             } else {
                 context.getOpponentPlayer().recibirDanio(atacante.getAttack());
-                view.mostrarMensaje("El Hunter ha recibido " + atacante.getAttack() + " puntos de daño.");
+                view.mostrarMensajePublico("El Hunter ha recibido " + atacante.getAttack() + " puntos de daño.");
                 if (context.getOpponentPlayer().getHealth() <= 0) {
-                    context.setState(new TerminarJuego(view));
                     context.finalizarJuego();
                 }
             }
@@ -160,15 +160,15 @@ public class GameController {
             } else {
                 objetivo.recibirDanio(atacante.getAttack());
                 atacante.recibirDanio(objetivo.getAttack());
-                view.mostrarMensaje("El minion objetivo ha recibido " + atacante.getAttack() + " puntos de daño.");
-                view.mostrarMensaje("El minion atacante ha recibido " + objetivo.getAttack() + " puntos de daño.");
+                view.mostrarMensajePublico("El minion objetivo ha recibido " + atacante.getAttack() + " puntos de daño.");
+                view.mostrarMensajePublico("El minion atacante ha recibido " + objetivo.getAttack() + " puntos de daño.");
                 if (objetivo.estaMuerto()) {
                     board.removeMinion(objetivoIndex);
-                    view.mostrarMensaje("El minion objetivo ha sido destruido.");
+                    view.mostrarMensajePublico("El minion objetivo ha sido destruido.");
                 }
                 if (atacante.estaMuerto()) {
                     board.removeMinion(atacanteIndex);
-                    view.mostrarMensaje("El minion atacante ha sido destruido.");
+                    view.mostrarMensajePublico("El minion atacante ha sido destruido.");
                 }
             }
         }

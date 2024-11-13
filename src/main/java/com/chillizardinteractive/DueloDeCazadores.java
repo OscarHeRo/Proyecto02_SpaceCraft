@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class DueloDeCazadores {
     public static void main(String[] args) {
         GameView view = new GameView();
-        GameContext context = new GameContext(null, null, new InicioJuego(view));
+        GameContext context = new GameContext(null, null, null);
         GameController controller = new GameController(context, view);
 
         // Iniciar el juego
