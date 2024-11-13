@@ -14,23 +14,20 @@ public class LanzamientoMoneda implements GameState {
 
     @Override
     public void lanzarMoneda(GameContext context) {
-        view.mostrarMensajePublico("Lanzando moneda para determinar el primer jugador...");
-
-        // Suponiendo que el jugador 1 elige cara
-        String eleccionJugador1 = "cara"; // "cara" o "cruz"
-        String resultado = Moneda.lanzarMoneda();
-
-        if (resultado.equals(eleccionJugador1)) {
-            view.mostrarMensajePublico("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
+        int resultado = (int) (Math.random() * 2); // 0 o 1
+        if (resultado == 0) {
             context.setCurrentPlayer(context.getPlayer1());
+            view.mostrarMensajePublico("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
         } else {
-            view.mostrarMensajePublico("Jugador 2 gana el lanzamiento de moneda y comienza primero.");
             context.setCurrentPlayer(context.getPlayer2());
+            view.mostrarMensajePublico("Jugador 2 gana el lanzamiento de moneda y comienza primero.");
         }
-
+        
+        // Configura el estado para que inicie el turno
         context.setState(new InicioTurno(view));
-        context.iniciarTurno();
+        context.iniciarTurno(); // Asegurarse de iniciar el turno después de lanzar la moneda
     }
+    
 
     @Override
     public void iniciarJuego(GameContext context) {

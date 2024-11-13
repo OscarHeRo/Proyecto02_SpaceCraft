@@ -27,33 +27,36 @@ public class InicioJuego implements GameState {
     @Override
     public void iniciarJuego(GameContext context) {
         view.mostrarMensajePublico("Iniciando el juego...");
-
-        // Inicializar los mazos desde el archivo decks.json
-        Deck deck = new Deck("Mazo1");
-        deck.initializeDeck("src/main/resources/decks.json");
-
-        // Crear jugadores con el mismo mazo
+    
+        // Inicializar dos mazos diferentes para cada jugador
+        Deck deck1 = new Deck("MazoJugador1");
+        deck1.initializeDeck("src/main/resources/decks.json");
+        Deck deck2 = new Deck("MazoJugador2");
+        deck2.initializeDeck("src/main/resources/decks.json");
+    
+        // Asignar los mazos a los jugadores
         Player player1 = context.getPlayer1();
         Player player2 = context.getPlayer2();
-        player1.setDeck(deck);
-        player2.setDeck(deck);
-
+        player1.setDeck(deck1);
+        player2.setDeck(deck2);
+    
         // Configurar jugadores con un espacio de nen y un punto de nen
         player1.incrementarNenPoints();
         player2.incrementarNenPoints();
-
+    
         // Mostrar los mazos de los jugadores
         System.out.println(player1.getDeck().deckToString());
         System.out.println(player2.getDeck().deckToString());
-
+    
         // Generar HTML para las cartas del mazo
         generateDeckHtml(player1.getDeck(), "output/cards/player1");
         generateDeckHtml(player2.getDeck(), "output/cards/player2");
-
+    
         // Configurar el contexto del juego con los jugadores y el estado inicial
         context.setCurrentPlayer(player1);
         context.setState(new LanzamientoMoneda(view));
     }
+    
 
     private void generateDeckHtml(Deck deck, String outputDir) {
         File dir = new File(outputDir);

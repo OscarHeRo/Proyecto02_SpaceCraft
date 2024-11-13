@@ -1,7 +1,10 @@
 package com.chillizardinteractive.cliente;
 
-import java.io.*;
-import java.net.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Scanner;
 
 public class ClienteJuego {
@@ -29,20 +32,10 @@ public class ClienteJuego {
 
     public void enviarNombre() {
         out.println("nombre:" + nombre);
-        try {
-            System.out.println("Respuesta del servidor: " + in.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void enviarMovimiento(String tipoMovimiento) {
         out.println(tipoMovimiento + ":" + nombre);
-        try {
-            System.out.println("Respuesta del servidor: " + in.readLine());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void escucharServidor() {
@@ -51,11 +44,38 @@ public class ClienteJuego {
                 String mensaje;
                 while ((mensaje = in.readLine()) != null) {
                     System.out.println(mensaje);
+
+                    // Procesar mensajes recibidos del servidor
+                    if (mensaje.contains("[Mensaje Privado]")) {
+                        if (mensaje.contains("Iniciando turno del jugador actual")) {
+                            realizarAccion();
+                        }
+                    }
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }).start();
+    }
+
+    public void realizarAccion() {
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Seleccione una acción: 1. Colocar carta, 2. Atacar, 3. Terminar turno");
+            int accion = scanner.nextInt();
+            if (accion == 1) {
+                enviarMovimiento("colocarCarta");
+                break;
+            } else if (accion == 2) {
+                enviarMovimiento("atacar");
+                break;
+            } else if (accion == 3) {
+                enviarMovimiento("terminarTurno");
+                break;
+            } else {
+                System.out.println("Acción no válida. Intente de nuevo.");
+            }
+        }
     }
 
     public static void main(String[] args) {
@@ -65,21 +85,5 @@ public class ClienteJuego {
 
         ClienteJuego cliente = new ClienteJuego(nombre);
         cliente.conectarAlServidor("localhost", 8080);
-        System.out.println("Cliente iniciado");
-
-        while (true) {
-            System.out.println("Seleccione una acción: 1. Colocar carta, 2. Atacar, 3. Terminar turno");
-            int accion = scanner.nextInt();
-            if (accion == 1) {
-                cliente.enviarMovimiento("colocarCarta");
-            } else if (accion == 2) {
-                cliente.enviarMovimiento("atacar");
-            } else if (accion == 3) {
-                cliente.enviarMovimiento("terminarTurno");
-                break;
-            } else {
-                System.out.println("Acción no válida. Intente de nuevo.");
-            }
-        }
     }
 }
