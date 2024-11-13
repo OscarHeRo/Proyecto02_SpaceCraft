@@ -45,10 +45,53 @@ public class ServidorJuego {
             gameController = new GameController(context, view);
             gameController.iniciarJuego();
             gameController.lanzarMoneda();
+            cicloDelJuego();
         }
     }
 
-    static class ClienteHandler implements Runnable {
+    private static void cicloDelJuego() {
+        do {
+            Player jugadorActual = gestorDeTurnos.obtenerJugadorEnTurno();
+            enviarActualizacion("[Mensaje Público] Iniciando turno del jugador: " + jugadorActual.getName());
+            gameController.iniciarTurno();
+
+            // Esperar la acción del jugador actual
+            while (true) {
+                try {
+                    Thread.sleep(1000); // Espera para permitir que el cliente envíe su acción
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // Verificar si el jugador terminó su turno
+                if (!gestorDeTurnos.esTurnoDe(jugadorActual)) {
+                    break;
+                }
+            }
+
+            // Revisar si alguno de los jugadores ha perdido
+            if (gameController.getContext().getPlayer1().getHealth() <= 0) {
+                enviarActualizacion("[Mensaje Público] El jugador " + gameController.getContext().getPlayer2().getName() + " ha ganado la partida.");
+                                break;
+                            } else if (gameController.getContext().getPlayer2().getHealth() <= 0) {
+                                enviarActualizacion("[Mensaje Público] El jugador " + gameController.getContext().getPlayer1().getName() + " ha ganado la partida.");
+                                break;
+                            }
+                
+                            // Avanzar al siguiente jugador
+                            gestorDeTurnos.avanzarTurno();
+                        } while (true);
+                
+                        // Finalizar el juego cuando haya un ganador
+                        gameController.finalizarJuego();
+                        enviarActualizacion("[Mensaje Público] El juego ha terminado.");
+                    }
+                
+                    private static void enviarActualizacion(String string) {
+                        // TODO Auto-generated method stub
+                        throw new UnsupportedOperationException("Unimplemented method 'enviarActualizacion'");
+                    }
+                
+                    static class ClienteHandler implements Runnable {
         private Socket clientSocket;
 
         public ClienteHandler(Socket clientSocket) {
