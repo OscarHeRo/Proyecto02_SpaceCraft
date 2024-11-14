@@ -1,10 +1,8 @@
 package com.chillizardinteractive.modelo.player;
 
 import com.chillizardinteractive.modelo.card.Card;
-import com.chillizardinteractive.modelo.deck.Deck;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.chillizardinteractive.modelo.deck.IDeck;
+import com.chillizardinteractive.modelo.hunter.Hunter;
 
 public class Player {
     private String name;
@@ -12,17 +10,26 @@ public class Player {
     private int nenSpaces;
     private int nenPoints;
     private Mano mano;
-    private Deck deck;
+    private IDeck deck;
+    private Hunter hunter;
+    private boolean listo = false; // Indica si el jugador está listo
 
-    public Player(String name, Deck deck) {
+    public Player(String name) {
         this.name = name;
         this.vida = 30;
         this.nenSpaces = 1;
         this.nenPoints = 1;
         this.mano = new Mano();
-        this.deck = deck;
     }
 
+    public Player(String name, Hunter hunter) {
+        this.name = name;
+        this.hunter = hunter;
+        this.vida = 30;
+        this.nenSpaces = 1;
+        this.nenPoints = 1;
+        this.mano = new Mano();
+    }
 
     public String getName() {
         return name;
@@ -41,19 +48,23 @@ public class Player {
     }
 
     public void incrementarNenPoints() {
-        this.nenPoints++;
+        nenPoints++;
     }
 
     public void recibirDanio(int danio) {
-        this.vida -= danio;
+        vida -= danio;
     }
 
     public Mano getMano() {
         return mano;
     }
 
-    public Deck getDeck() {
+    public IDeck getDeck() {
         return deck;
+    }
+
+    public void setDeck(IDeck deck) {
+        this.deck = deck;
     }
 
     public void robarCarta() {
@@ -63,13 +74,28 @@ public class Player {
         }
     }
 
-
     public void incrementarNenSpaces() {
-        this.nenSpaces++;
+        nenSpaces++;
     }
 
-
     public void rellenarNenPoints() {
-        this.nenPoints = nenSpaces;
+        nenPoints = nenSpaces;
+    }
+
+    public void setHunter(Hunter hunter) {
+        this.hunter = hunter;
+    }
+
+    public Hunter getHunter() {
+        return hunter;
+    }
+
+    // Métodos de estado de preparación
+    public boolean estaListo() {
+        return listo;
+    }
+
+    public void marcarComoListo() {
+        this.listo = true;
     }
 }

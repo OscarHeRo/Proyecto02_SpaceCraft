@@ -8,53 +8,86 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
-        <!-- Dependencia para Spring Boot Starter Web -->
+        <!-- Dependencias -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.5.4</version>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.8</version>
         </dependency>
 
-        <!-- Dependencia para Spring Boot Starter WebSocket -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-websocket</artifactId>
-            <version>2.5.4</version>
-        </dependency>
-
-        <!-- Dependencia para JSON Simple -->
-        <dependency>
-            <groupId>com.googlecode.json-simple</groupId>
-            <artifactId>json-simple</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-
-        <!-- Dependencia para Jackson -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.12.4</version>
         </dependency>
 
-        <!-- Dependencia para Spring Boot Starter Test (opcional, para pruebas) -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <version>2.5.4</version>
-            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+            <version>2.5.4</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
-            <!-- Plugin para Spring Boot -->
+            <!-- Plugin para crear un fat jar usando maven-shade-plugin -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <mainClass>com.chillizardinteractive.DueloDeCazadores</mainClass>
-                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${finalJarName}</finalName>
+                            <transformers>
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${mainClass}</mainClass>
+                                </transformer>
+                            </transformers>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>servidor</id>
+            <properties>
+                <mainClass>com.chillizardinteractive.servidor.ServidorJuego</mainClass>
+                <finalJarName>ServidorJuego</finalJarName>
+            </properties>
+        </profile>
+        <profile>
+            <id>cliente</id>
+            <properties>
+                <mainClass>com.chillizardinteractive.cliente.ClienteJuego</mainClass>
+                <finalJarName>ClienteJuego</finalJarName>
+            </properties>
+        </profile>
+    </profiles>
 </project>

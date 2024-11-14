@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
-public class Deck {
+public class Deck implements IDeck {
     private String deckName;
     private final Stack<Card> cardStack;
     private final List<Card> originalDeck;
@@ -78,6 +78,7 @@ public class Deck {
         Collections.shuffle(cardStack);
     }
 
+
     public Card sacarCarta() {
         if (cardStack.isEmpty()) {
             System.out.println("El mazo está vacío. Barajando el mazo original...");
@@ -87,35 +88,17 @@ public class Deck {
         return cardStack.isEmpty() ? null : cardStack.pop();
     }
 
-    public void showDeck() {
-        System.out.println("Deck:");
-        if (cardStack.isEmpty()) {
-            System.out.println("El mazo está vacío.");
-            return;
-        }
-        for (Card card : cardStack) {
-            if (card == null) {
-                System.out.println("Carta nula encontrada en el mazo.");
-            } else {
-                System.out.println("- " + card.getDescription());
-            }
-        }
-    }
-
-    public List<Card> getCardList() {
-        return new ArrayList<>(cardStack);
-    }
 
     public List<Card> getCards() {
-        return originalDeck;
+        return new ArrayList<>(originalDeck); // Devuelve una copia inmutable
     }
 
-    public String  deckToString() {
 
-        String deckString = "";
+    public String deckToString() {
+        StringBuilder deckString = new StringBuilder("Deck:\n");
         for (Card card : cardStack) {
-            deckString += card.getDescription() + "\n";
+            deckString.append("- ").append(card.getDescription()).append("\n");
         }
-        return deckString;
+        return deckString.toString();
     }
 }

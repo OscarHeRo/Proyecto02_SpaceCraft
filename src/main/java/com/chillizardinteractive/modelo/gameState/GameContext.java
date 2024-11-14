@@ -1,56 +1,113 @@
 package com.chillizardinteractive.modelo.gameState;
 
 import com.chillizardinteractive.modelo.board.Board;
+import com.chillizardinteractive.modelo.card.Card;
+import com.chillizardinteractive.modelo.deck.Deck;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.vista.GameView;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class GameContext {
-    private GameState currentState;
     private Player player1;
     private Player player2;
     private Player currentPlayer;
     private List<Player> players;
     private boolean permisoParaAtaque = false;
     private Board board;
+    private GameView view;
 
-    public GameContext(Player player1, Player player2, GameState initialState) {
+    // Constructor actualizado
+    public GameContext(Player player1, Player player2, GameView view) {
         this.player1 = player1;
         this.player2 = player2;
-        this.currentState = initialState;
+        this.view = view;
         this.players = new ArrayList<>();
         if (player1 != null) this.players.add(player1);
         if (player2 != null) this.players.add(player2);
-        this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
-        this.board = new Board(); // Asegúrate de inicializar board
-    }
-
-    public void setState(GameState state) {
-        this.currentState = state;
+        this.currentPlayer = player1;
+        this.board = new Board();
     }
 
     public void iniciarJuego() {
-        currentState.iniciarJuego(this);
+        view.mostrarMensajePublico("Iniciando el juego...");
+        // Inicializar los mazos desde el archivo decks.json
+        Deck deck1 = new Deck("Mazo1");
+        Deck deck2 = new Deck("Mazo2");
+        deck1.initializeDeck("src/main/resources/decks.json");
+        deck2.initializeDeck("src/main/resources/decks.json");
+        // Crear jugadores con sus mazos
+        player1.setDeck(deck1);
+        player2.setDeck(deck2);
+        // Configurar jugadores con un espacio de nen y un punto de nen
+        player1.incrementarNenPoints();
+        player2.incrementarNenPoints();
+        // Mostrar los mazos de los jugadores
+        System.out.println(player1.getDeck().getCards());
+        System.out.println(player2.getDeck().getCards());
+        // Repartir las cartas
+        repartirCartas();
+        // Lanzar moneda para determinar el primer jugador
+        lanzarMoneda();
+    }
+
+    private void repartirCartas() {
+        for (int i = 0; i < 3; i++) {
+            player1.robarCarta();
+        }
+        for (int i = 0; i < 4; i++) {
+            player2.robarCarta();
+        }
     }
 
     public void lanzarMoneda() {
-        currentState.lanzarMoneda(this);
+        view.mostrarMensajePublico("Lanzando moneda para determinar el primer jugador...");
+        // Suponiendo que el jugador 1 elige cara
+        String eleccionJugador1 = "cara"; // "cara" o "cruz"
+        String resultado = Moneda.lanzarMoneda();
+
+        if (resultado.equals(eleccionJugador1)) {
+            view.mostrarMensajePublico("Jugador 1 gana el lanzamiento de moneda y comienza primero.");
+            currentPlayer = player1;
+        } else {
+            view.mostrarMensajePublico("Jugador 2 gana el lanzamiento de moneda y comienza primero.");
+            currentPlayer = player2;
+        }
+        iniciarTurno();
     }
 
     public void iniciarTurno() {
-        currentState.iniciarTurno(this);
+        view.mostrarMensajePrivado(currentPlayer.getName(), "Iniciando turno del jugador actual...");
+        currentPlayer.incrementarNenSpaces();
+        currentPlayer.rellenarNenPoints();
+        Card drawnCard = currentPlayer.getDeck().sacarCarta();
+        if (drawnCard != null) {
+            currentPlayer.getMano().agregarCartasMano(drawnCard);
+            view.mostrarCartaRobada(currentPlayer.getName(), drawnCard.getDescription());
+        } else {
+            view.mostrarMensajePrivado(currentPlayer.getName(), "No tienes más cartas en el mazo.");
+        }
     }
 
     public void faseCombate() {
-        currentState.faseCombate(this);
+        if (permisoParaAtaque) {
+            // Lógica de combate
+        } else {
+            view.mostrarError("No tienes permiso para atacar.");
+        }
     }
 
     public void terminarTurno() {
-        currentState.terminarTurno(this);
+        view.mostrarMensajePublico("Terminando el turno del jugador actual...");
+        switchPlayer();
+        iniciarTurno();
     }
 
     public void finalizarJuego() {
-        currentState.finalizarJuego(this);
+        view.mostrarMensajePublico("El juego ha terminado.");
+
+        // Lógica para finalizar el juego
     }
 
     public Player getPlayer1() {
@@ -59,9 +116,6 @@ public class GameContext {
 
     public void setPlayer1(Player player1) {
         this.player1 = player1;
-        if (!players.contains(player1)) {
-            players.add(player1);
-        }
     }
 
     public Player getPlayer2() {
@@ -70,9 +124,6 @@ public class GameContext {
 
     public void setPlayer2(Player player2) {
         this.player2 = player2;
-        if (!players.contains(player2)) {
-            players.add(player2);
-        }
     }
 
     public void setCurrentPlayer(Player player) {
@@ -96,14 +147,29 @@ public class GameContext {
     }
 
     public void switchPlayer() {
-        if (currentPlayer == player1) {
-            currentPlayer = player2;
-        } else {
-            currentPlayer = player1;
-        }
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
     }
 
     public Player getOpponentPlayer() {
-        return currentPlayer == player1 ? player2 : player1;
+        return (currentPlayer == player1) ? player2 : player1;
+    }
+
+    public boolean todosLosJugadoresListos() {
+        for (Player player : players) {
+            if (!player.estaListo()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public String getNumeroJugadoresListos() {
+        int count = 0;
+        for (Player player : players) {
+            if (player.estaListo()) {
+                count++;
+            }
+        }
+        return String.valueOf(count);
     }
 }

@@ -1,4 +1,5 @@
 package com.chillizardinteractive.vista;
+
 public class GameView {
 
     // Mostrar un mensaje que todos los jugadores deberían ver
