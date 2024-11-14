@@ -3,6 +3,7 @@ package com.chillizardinteractive.controlador;
 import com.chillizardinteractive.modelo.hunter.Hunter;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
+import com.chillizardinteractive.controlador.GameController;
 
 import java.io.PrintWriter;
 import java.util.List;
