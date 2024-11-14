@@ -1,11 +1,11 @@
 package com.chillizardinteractive.controlador;
 
-import java.io.PrintWriter;
-import java.util.List;
-
 import com.chillizardinteractive.modelo.hunter.Hunter;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
+
+import java.io.PrintWriter;
+import java.util.List;
 
 public class PlayerController {
     private List<Player> jugadores;
@@ -58,22 +58,20 @@ public class PlayerController {
             out.println("Jugador no encontrado.");
             return;
         }
-
+    
         if (!jugador.estaListo()) {
             jugadoresListos++;
             jugador.marcarComoListo();
             out.println("Jugador listo: " + nombreJugador);
             System.out.println("Jugador " + nombreJugador + " está listo. Total de jugadores listos: " + jugadoresListos);
         }
-
-        // Si hay al menos dos jugadores listos, intentamos iniciar el juego
-        if (jugadoresListos == 2) {
-            System.out.println("Dos jugadores están listos. Iniciando el juego...");
-            iniciarJuegoCallback.run(); // Aquí se debería llamar al método iniciarJuego()
-        } else {
-            System.out.println("Aún no todos los jugadores están listos. Jugadores listos: " + jugadoresListos + "/2");
+    
+        if (jugadoresListos == jugadores.size()) {
+            System.out.println("Todos los jugadores están listos. Iniciando el juego...");
+            iniciarJuegoCallback.run();
         }
     }
+    
 
     private Player buscarJugador(String nombre) {
         return jugadores.stream()

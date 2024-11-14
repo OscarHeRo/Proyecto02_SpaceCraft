@@ -2,6 +2,7 @@ package com.chillizardinteractive.modelo.gameState;
 
 import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.servidor.ServidorJuego;
 import com.chillizardinteractive.vista.GameView;
 
 import java.util.List;
@@ -12,17 +13,20 @@ public class FlujoDeJuego {
     private GameView view;
     private GameContext context;
     private boolean juegoIniciado = false;
+    private ServidorJuego servidor; // Referencia al servidor
 
-    public FlujoDeJuego(List<Player> jugadores, GameView view) {
+    // Constructor actualizado para incluir referencia al ServidorJuego
+    public FlujoDeJuego(List<Player> jugadores, GameView view, ServidorJuego servidor) {
         this.jugadores = jugadores;
         this.view = view;
+        this.servidor = servidor; // Asignar la referencia del servidor
     }
 
     public void iniciarJuego() {
         if (jugadores.size() == 2 && !juegoIniciado) {
             juegoIniciado = true;
-            context = new GameContext(jugadores.get(0), jugadores.get(1),this.view);
-            gameController = new GameController(context);
+            context = new GameContext(jugadores.get(0), jugadores.get(1), this.view);
+            gameController = new GameController(context, servidor); // Pasar referencia del servidor al controlador
             gameController.iniciarJuego();
             gameController.lanzarMoneda();
             cicloDelJuego();

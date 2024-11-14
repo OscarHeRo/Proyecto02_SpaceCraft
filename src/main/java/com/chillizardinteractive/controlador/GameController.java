@@ -2,6 +2,7 @@ package com.chillizardinteractive.controlador;
 
 import com.chillizardinteractive.modelo.gameState.GameContext;
 import com.chillizardinteractive.modelo.player.Player;
+import com.chillizardinteractive.servidor.ServidorJuego;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -10,9 +11,12 @@ import java.util.concurrent.TimeUnit;
 public class GameController {
     private GameContext context;
     private ScheduledExecutorService scheduler;
+    private ServidorJuego servidor; // Referencia al servidor para enviar mensajes a los jugadores
 
-    public GameController(GameContext context) {
+    // Constructor actualizado para incluir la referencia al servidor
+    public GameController(GameContext context, ServidorJuego servidor) {
         this.context = context;
+        this.servidor = servidor;
         this.scheduler = Executors.newScheduledThreadPool(1);
     }
 
@@ -35,7 +39,12 @@ public class GameController {
     }
 
     public void iniciarTurno() {
-        System.out.println("Iniciando turno del jugador: " + context.getCurrentPlayer().getName());
+        Player currentPlayer = context.getCurrentPlayer();
+        System.out.println("Iniciando turno del jugador: " + currentPlayer.getName());
+        
+        // Notificar al jugador que es su turno
+        servidor.enviarMensajeAlJugador(currentPlayer, "Iniciando turno del jugador actual...");
+        
         context.iniciarTurno();
         startTurnTimer();
     }
@@ -49,7 +58,12 @@ public class GameController {
     }
 
     public void terminarTurno() {
-        System.out.println("Turno finalizado.");
+        Player currentPlayer = context.getCurrentPlayer();
+        System.out.println("Turno finalizado del jugador: " + currentPlayer.getName());
+        
+        // Notificar al jugador que su turno ha finalizado
+        servidor.enviarMensajeAlJugador(currentPlayer, "Terminando tu turno...");
+
         context.terminarTurno();
         iniciarTurno();
     }
@@ -62,6 +76,7 @@ public class GameController {
         }
         // Aquí podrías agregar más lógica para limpiar recursos o reiniciar el juego
     }
+
     // Método añadido para procesar el movimiento de un jugador
     public void procesarMovimiento(String jugador, String accion) {
         Player player = context.getPlayers().stream()
@@ -75,14 +90,17 @@ public class GameController {
         }
 
         System.out.println("Procesando movimiento del jugador " + jugador + ": " + accion);
-        // Aquí se debería añadir la lógica específica para el tipo de movimiento
+        
+        // Lógica específica para el tipo de movimiento
         switch (accion) {
             case "colocarCarta":
                 System.out.println(jugador + " está colocando una carta en el tablero.");
+                servidor.enviarMensajeAlJugador(player, "Has colocado una carta en el tablero.");
                 // Implementar lógica de colocar carta
                 break;
             case "atacar":
                 System.out.println(jugador + " está atacando.");
+                servidor.enviarMensajeAlJugador(player, "Has iniciado un ataque.");
                 // Implementar lógica de ataque
                 break;
             case "terminarTurno":
@@ -91,6 +109,7 @@ public class GameController {
                 break;
             default:
                 System.out.println("Acción no reconocida: " + accion);
+                servidor.enviarMensajeAlJugador(player, "Acción no reconocida, intenta de nuevo.");
         }
     }
 }
