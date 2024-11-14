@@ -9,6 +9,7 @@ import com.chillizardinteractive.vista.GameView;
 
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -24,10 +25,9 @@ public class ServidorJuego {
     }
 
     public ServidorJuego() {
-        Player player1 = new Player("Jugador1");
-        Player player2 = new Player("Jugador2");
         GameView view = new GameView();
-        GameContext context = new GameContext(player1, player2, view);
+        List<Player> jugadores = new ArrayList<>();
+        GameContext context = new GameContext(jugadores, view); // Usar una lista de jugadores dinámica
         this.gameController = new GameController(context);
         this.playerController = new PlayerController(context.getPlayers(), gameController, view);
         this.messageBroker = new MessageBroker(gameController, playerController);
