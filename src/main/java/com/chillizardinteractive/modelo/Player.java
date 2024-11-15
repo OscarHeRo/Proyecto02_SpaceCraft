@@ -1,7 +1,7 @@
-package com.chillizardinteractive.modelo.player;
+package com.chillizardinteractive.modelo;
 
-import com.chillizardinteractive.modelo.card.Card;
 import com.chillizardinteractive.modelo.deck.Deck;
+import com.chillizardinteractive.modelo.factory.Card;
 
 import java.util.ArrayList;
 import java.util.List;

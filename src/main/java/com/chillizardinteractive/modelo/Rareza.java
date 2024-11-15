@@ -1,6 +1,6 @@
-package com.chillizardinteractive.modelo.card;
+package com.chillizardinteractive.modelo;
 
-public enum Rarity {
+public enum Rareza {
     COMMON("rgba(255, 255, 255, 0.43)"),  // Común (gema blanca)
     RARE("rgba(0, 112, 221, 0.43)"),      // Rara (gema azul)
     EPIC("rgba(163, 53, 238, 0.43)"),     // Épica (gema violeta)
@@ -8,7 +8,7 @@ public enum Rarity {
 
     private final String cssColor;
 
-    Rarity(String cssColor) {
+    Rareza(String cssColor) {
         this.cssColor = cssColor;
     }
 

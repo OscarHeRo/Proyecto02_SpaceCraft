@@ -1,8 +1,9 @@
-package com.chillizardinteractive.modelo.card;
+package com.chillizardinteractive.modelo.Decorator;
+
+import com.chillizardinteractive.modelo.Card;
 
 public abstract class CardDecorator extends Card {
     protected final Card decoratedCard;
-
     public CardDecorator(Card card) {
         super(card.getName(), card.getDescription(), card.getNenCost(), card.getRarity());
         this.decoratedCard = card;

@@ -1,9 +1,12 @@
-package com.chillizardinteractive.modelo.deck;
+package com.chillizardinteractive.modelo.deckProxy;
 
-import com.chillizardinteractive.modelo.card.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import com.chillizardinteractive.modelo.Decorator.*;
+import com.chillizardinteractive.modelo.cardFactory.Card;
+import com.chillizardinteractive.modelo.cardFactory.CardFactory;
 
 import java.io.FileReader;
 import java.util.ArrayList;
