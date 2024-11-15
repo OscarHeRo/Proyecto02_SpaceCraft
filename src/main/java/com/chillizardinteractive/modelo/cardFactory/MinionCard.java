@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.factory;
+package com.chillizardinteractive.modelo.cardFactory;
 import org.json.simple.JSONObject;
 
 import com.chillizardinteractive.modelo.Rareza;
@@ -30,6 +30,9 @@ public class MinionCard extends Card {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
     @Override
     public String getTipo() {
 <<<<<<< Updated upstream
@@ -40,11 +43,14 @@ public class MinionCard extends Card {
 >>>>>>> Stashed changes
     }
 
+<<<<<<< HEAD
 =======
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
 =======
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
 =======
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
+=======
+>>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
     // Métodos específicos para MinionCard
 }

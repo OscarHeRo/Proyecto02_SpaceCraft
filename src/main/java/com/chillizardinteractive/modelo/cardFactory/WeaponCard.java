@@ -12,11 +12,15 @@ public class WeaponCard extends Card {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
         super(name, cost, rarity, description);
 =======
     public WeaponCard(String name, int cost, Rareza rareza, String description, int attack, int durability) {
         super( name,  description,  cost,  rareza);
 >>>>>>> Stashed changes
+<<<<<<< HEAD
 =======
         super(name, cost, rarity, description,);
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
@@ -26,6 +30,8 @@ public class WeaponCard extends Card {
 =======
         super(name, cost, rarity, description,);
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
+=======
+>>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
         this.attack = attack;
         this.durability = durability;
     }
