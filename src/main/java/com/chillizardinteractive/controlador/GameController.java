@@ -142,8 +142,7 @@ public class GameController {
             } else {
                 context.getOpponentPlayer().recibirDanio(atacante.getAttack());
                 view.mostrarMensaje("El Hunter ha recibido " + atacante.getAttack() + " puntos de daño.");
-                if (context.getOpponentPlayer().getVida() <= 0) {
-                    context.setState(new TerminarJuego(view));
+                if (context.getOpponentPlayer().getHealth() <= 0) {
                     context.finalizarJuego();
                 }
             }
