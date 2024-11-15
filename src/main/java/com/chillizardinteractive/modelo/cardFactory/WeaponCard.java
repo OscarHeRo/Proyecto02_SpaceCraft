@@ -8,7 +8,7 @@ public class WeaponCard extends Card {
     private int durability;
 
     public WeaponCard(String name, int cost, Rareza rarity, String description, int attack, int durability) {
-        super(name, cost, rarity, description,);
+        super(name, cost, rarity, description);
         this.attack = attack;
         this.durability = durability;
     }

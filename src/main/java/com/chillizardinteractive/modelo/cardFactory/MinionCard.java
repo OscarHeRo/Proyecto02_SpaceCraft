@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.factory;
+package com.chillizardinteractive.modelo.cardFactory;
 import org.json.simple.JSONObject;
 
 import com.chillizardinteractive.modelo.Rareza;
@@ -24,6 +24,12 @@ public class MinionCard extends Card {
             ((Long) json.get("attack")).intValue(),
             ((Long) json.get("defense")).intValue()
         );
+    }
+
+    @Override
+    public String getTipo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTipo'");
     }
 
     // Métodos específicos para MinionCard
