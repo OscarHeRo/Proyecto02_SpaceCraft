@@ -7,8 +7,13 @@ public class WeaponCard extends Card {
     private int attack;
     private int durability;
 
+<<<<<<< Updated upstream
     public WeaponCard(String name, int cost, Rareza rarity, String description, int attack, int durability) {
         super(name, cost, rarity, description);
+=======
+    public WeaponCard(String name, int cost, Rareza rareza, String description, int attack, int durability) {
+        super( name,  description,  cost,  rareza);
+>>>>>>> Stashed changes
         this.attack = attack;
         this.durability = durability;
     }

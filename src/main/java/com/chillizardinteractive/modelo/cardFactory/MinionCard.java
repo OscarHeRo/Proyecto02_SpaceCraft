@@ -7,9 +7,10 @@ public class MinionCard extends Card {
     private int attack;
     private int defense;
     private Rareza rareza;
+    private String descripcion;
 
     public MinionCard(String name, int cost, Rareza rareza, String description, int attack, int defense) {
-        super(name, cost, rareza, description);
+        super( name,  description,  cost,  rareza);
         this.attack = attack;
         this.defense = defense;
         this.rareza = rareza;
@@ -28,8 +29,12 @@ public class MinionCard extends Card {
 
     @Override
     public String getTipo() {
+<<<<<<< Updated upstream
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getTipo'");
+=======
+        return "Minion";
+>>>>>>> Stashed changes
     }
 
     // Métodos específicos para MinionCard

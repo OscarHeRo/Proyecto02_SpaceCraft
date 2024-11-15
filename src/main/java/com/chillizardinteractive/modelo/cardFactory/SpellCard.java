@@ -5,8 +5,8 @@ import com.chillizardinteractive.modelo.Rareza;
 
 public class SpellCard extends Card {
 
-    public SpellCard(String name, int cost, Rareza rarity, String description) {
-        super(name, cost, rarity, description);
+    public SpellCard(String name, int cost, Rareza rareza, String description) {
+        super( name,  description,  cost,  rareza);
     }
 
     public static SpellCard fromJson(JSONObject json) {
@@ -20,7 +20,7 @@ public class SpellCard extends Card {
 
     // Método que define el comportamiento de "irse al cementerio" después de usar
     public void usarHechizo() {
-        System.out.println("Hechizo usado y enviado al cementerio: " + name);
+        System.out.println("Hechizo usado y enviado al cementerio: " + this.name);
     }
 
     @Override
