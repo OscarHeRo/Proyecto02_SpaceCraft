@@ -1,10 +1,10 @@
-package com.chillizardinteractive.modelo.builder;
-
-import com.chillizardinteractive.modelo.factory.Card;
-import com.chillizardinteractive.modelo.proxyDeck.deckProxy;;
+package com.chillizardinteractive.modelo.deckB;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.chillizardinteractive.modelo.cardFactory.Card;
+import com.chillizardinteractive.modelo.deckProxy.Deck;
 
 public class DeckBuilder {
     private List<Card> cards;

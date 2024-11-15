@@ -2,7 +2,7 @@ package com.chillizardinteractive.modelo.deckProxy;
 
 import java.util.List;
 
-import com.chillizardinteractive.modelo.factory.Card;
+import com.chillizardinteractive.modelo.cardFactory.Card;
 
 public class SecureDeckProxy implements InterfazDeck {
     private Deck deck;

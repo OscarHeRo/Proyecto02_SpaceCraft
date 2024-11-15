@@ -1,11 +1,11 @@
 package com.chillizardinteractive.modelo.Decorator;
 
-import com.chillizardinteractive.modelo.Card;
+import com.chillizardinteractive.modelo.cardFactory.Card;
 
 public abstract class CardDecorator extends Card {
     protected final Card decoratedCard;
     public CardDecorator(Card card) {
-        super(card.getName(), card.getDescription(), card.getNenCost(), card.getRarity());
+        super(card.getNombre(), card.getDescripcion(), card.getNenCost(), card.getRarity());
         this.decoratedCard = card;
     }
 
@@ -16,12 +16,12 @@ public abstract class CardDecorator extends Card {
 
     @Override
     public String getName() {
-        return decoratedCard.getName();
+        return decoratedCard.getNombre();
     }
 
     @Override
     public String getDescription() {
-        return decoratedCard.getDescription();
+        return decoratedCard.getDescripcion();
     }
 
     @Override

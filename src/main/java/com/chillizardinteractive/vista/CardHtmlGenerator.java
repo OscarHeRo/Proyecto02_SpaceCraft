@@ -1,23 +1,22 @@
 package com.chillizardinteractive.vista;
 
-import com.chillizardinteractive.modelo.card.Card;
-import com.chillizardinteractive.modelo.card.MinionCard;
-import com.chillizardinteractive.modelo.card.SpellCard;
-import com.chillizardinteractive.modelo.card.WeaponCard;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.chillizardinteractive.modelo.cardFactory.Card;
+import com.chillizardinteractive.modelo.cardFactory.MinionCard;
+import com.chillizardinteractive.modelo.cardFactory.WeaponCard;
+
 public class CardHtmlGenerator {
 
     public static void generateCardHtml(Card card, String outputPath) {
         try {
             String template = new String(Files.readAllBytes(Paths.get("src/main/resources/templates/cards.html")));
-            template = template.replace("{{cardName}}", card.getName());
-            template = template.replace("{{cardDescription}}", card.getDescription());
+            template = template.replace("{{cardName}}", card.getNombre());
+            template = template.replace("{{cardDescription}}", card.getDescripcion());
             template = template.replace("{{cardCost}}", String.valueOf(card.getNenCost()));
             if (card instanceof MinionCard) {
                 MinionCard minion = (MinionCard) card;

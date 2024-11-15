@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.card;
+package com.chillizardinteractive.modelo.Decorator;
 
 public class TauntDecorator extends CardDecorator {
     public TauntDecorator(Card card) {
