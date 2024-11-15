@@ -1,7 +1,7 @@
 package com.chillizardinteractive.modelo.servidor;
 
 import com.chillizardinteractive.controlador.AdminController;
-import com.chillizardinteractive.modelo.cadFactory.CardFactory;
+import com.chillizardinteractive.modelo.cardFactory.CardFactory;
 
 public class Servidor {
     public void modificarMazo(AdminController adminController) {

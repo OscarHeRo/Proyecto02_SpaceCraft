@@ -1,4 +1,3 @@
-@ -1,190 +0,0 @@
 package com.chillizardinteractive.controlador;
 
 import com.chillizardinteractive.modelo.Player;
