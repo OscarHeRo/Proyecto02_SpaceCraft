@@ -11,11 +11,15 @@ public class WeaponCard extends Card {
     public WeaponCard(String name, int cost, Rareza rarity, String description, int attack, int durability) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         super(name, cost, rarity, description);
 =======
     public WeaponCard(String name, int cost, Rareza rareza, String description, int attack, int durability) {
         super( name,  description,  cost,  rareza);
 >>>>>>> Stashed changes
+=======
+        super(name, cost, rarity, description,);
+>>>>>>> parent of 15f8f8f (Más errores arreglados)
 =======
         super(name, cost, rarity, description,);
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
