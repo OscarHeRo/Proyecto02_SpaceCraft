@@ -12,12 +12,18 @@ public class BattlecryDecorator extends CardDecorator {
 
     @Override
     public String getDescription() {
-        return decoratedCard.getDescription() + " (Battlecry)";
+        return decoratedCard.getDescripcion() + " (Battlecry)";
     }
 
     @Override
     public void playEffect() {
         System.out.println("Grito de Batalla: " + battlecryEffect);
         decoratedCard.playEffect();
+    }
+
+    @Override
+    public String getTipo() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTipo'");
     }
 }

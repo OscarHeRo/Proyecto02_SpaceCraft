@@ -101,7 +101,7 @@ public class Deck {
             if (card == null) {
                 System.out.println("Carta nula encontrada en el mazo.");
             } else {
-                System.out.println("- " + card.getDescription());
+                System.out.println("- " + card.getDescripcion());
             }
         }
     }
@@ -118,7 +118,7 @@ public class Deck {
 
         String deckString = "";
         for (Card card : cardStack) {
-            deckString += card.getDescription() + "\n";
+            deckString += card.getDescripcion() + "\n";
         }
         return deckString;
     }
