@@ -1,6 +1,6 @@
 // Cliente.java
 //proposito
-package com.chillizardinteractive.modelo.cliente;
+package com.chillizardinteractive.cliente;
 
 public class Cliente {
     public void listoParaPartida() {

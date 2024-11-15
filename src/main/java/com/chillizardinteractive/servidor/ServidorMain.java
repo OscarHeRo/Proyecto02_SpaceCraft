@@ -1,13 +1,13 @@
-package com.chillizardinteractive.modelo.servidor;
+package com.chillizardinteractive.servidor;
 
 import java.io.*;
 import java.net.*;
 
-public class ServidorSocket {
+public class ServidorMain {
     private int port;
     private ServerSocket serverSocket;
 
-    public ServidorSocket(int port) {
+    public ServidorMain(int port) {
         this.port = port;
         try {
             this.serverSocket = new ServerSocket(port);

@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.servidor;
+package com.chillizardinteractive.servidor;
 
 import com.chillizardinteractive.controlador.AdminController;
 import com.chillizardinteractive.modelo.cardFactory.CardFactory;

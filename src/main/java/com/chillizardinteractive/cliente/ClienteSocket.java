@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.cliente;
+package com.chillizardinteractive.cliente;
 // ClienteSocket.java
 public class ClienteSocket {
     private String ip;

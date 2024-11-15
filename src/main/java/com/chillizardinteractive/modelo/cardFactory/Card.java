@@ -26,6 +26,6 @@ public abstract class Card {
 
     @Override
     public String toString() {
-        return getTipo() + " - " + nombre + ": " + descripcion + " (Costo: " + costoMana + ", Rareza: " + rareza + ")";
+        return getTipo() + " - " + name + ": " + descripcion + " (Costo: " + costoMana + ", Rareza: " + rareza + ")";
     }
 }

@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.cliente;
+package com.chillizardinteractive.cliente;
 
 // ClienteMain.java
 public class ClienteMain {
