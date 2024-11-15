@@ -1,4 +1,4 @@
-package com.chillizardinteractive.modelo.factory;
+package com.chillizardinteractive.modelo.cardFactory;
 
 import com.chillizardinteractive.modelo.Rareza;
 

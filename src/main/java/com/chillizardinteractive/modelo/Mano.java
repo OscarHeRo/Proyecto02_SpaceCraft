@@ -1,8 +1,9 @@
-package com.chillizardinteractive.modelo.player;
+package com.chillizardinteractive.modelo;
 
-import com.chillizardinteractive.modelo.card.Card;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.chillizardinteractive.modelo.cardFactory.Card;
 
 public class Mano {
     private List<Card> cartasEnMano;
@@ -32,7 +33,7 @@ public class Mano {
         StringBuilder sb = new StringBuilder();
         sb.append("Mano del jugador:\n");
         for (int i = 0; i < cartasEnMano.size(); i++) {
-            sb.append((i + 1) + "._ " + cartasEnMano.get(i).getDescription() + "\n");
+            sb.append((i + 1) + "._ " + cartasEnMano.get(i).getDescripcion() + "\n");
         }
         return sb.toString();
     }

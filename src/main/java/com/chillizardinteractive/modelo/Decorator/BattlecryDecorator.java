@@ -1,4 +1,6 @@
-package com.chillizardinteractive.modelo.card;
+package com.chillizardinteractive.modelo.Decorator;
+
+import com.chillizardinteractive.modelo.cardFactory.Card;
 
 public class BattlecryDecorator extends CardDecorator {
     private final String battlecryEffect;

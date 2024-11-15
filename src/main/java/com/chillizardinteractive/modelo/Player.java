@@ -1,10 +1,10 @@
 package com.chillizardinteractive.modelo;
 
-import com.chillizardinteractive.modelo.deck.Deck;
-import com.chillizardinteractive.modelo.factory.Card;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.chillizardinteractive.modelo.cardFactory.Card;
+import com.chillizardinteractive.modelo.deckProxy.Deck;
 
 public class Player {
     private String name;

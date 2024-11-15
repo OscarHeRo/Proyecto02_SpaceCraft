@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import com.chillizardinteractive.modelo.Rareza;
 import com.chillizardinteractive.modelo.Decorator.*;
 import com.chillizardinteractive.modelo.cardFactory.Card;
 import com.chillizardinteractive.modelo.cardFactory.CardFactory;
@@ -57,7 +58,7 @@ public class Deck {
             String type = (String) cardJson.get("type");
             int attack = cardJson.containsKey("attack") ? ((Long) cardJson.get("attack")).intValue() : 0;
             int defense = cardJson.containsKey("defense") ? ((Long) cardJson.get("defense")).intValue() : 0;
-            Rarity rarity = Rarity.valueOf((String) cardJson.get("rarity"));
+            Rareza rarity = Rareza.valueOf((String) cardJson.get("rarity"));
             Card card = CardFactory.crearCarta(type, name, description, nenCost, attack, defense, rarity);
 
             String effect = (String) cardJson.get("effect");
