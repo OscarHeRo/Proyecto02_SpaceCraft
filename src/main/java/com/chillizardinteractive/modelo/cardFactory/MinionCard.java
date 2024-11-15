@@ -28,6 +28,7 @@ public class MinionCard extends Card {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     @Override
     public String getTipo() {
 <<<<<<< Updated upstream
@@ -38,6 +39,8 @@ public class MinionCard extends Card {
 >>>>>>> Stashed changes
     }
 
+=======
+>>>>>>> parent of 15f8f8f (Más errores arreglados)
 =======
 >>>>>>> parent of 15f8f8f (Más errores arreglados)
     // Métodos específicos para MinionCard
