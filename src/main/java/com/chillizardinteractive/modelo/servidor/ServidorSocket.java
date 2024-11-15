@@ -1,4 +1,4 @@
-package com.chillizardinteractive.servidor;
+package com.chillizardinteractive.modelo.servidor;
 
 import java.io.*;
 import java.net.*;

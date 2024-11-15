@@ -8,6 +8,7 @@ import java.nio.file.Paths;
 
 import com.chillizardinteractive.modelo.cardFactory.Card;
 import com.chillizardinteractive.modelo.cardFactory.MinionCard;
+import com.chillizardinteractive.modelo.cardFactory.SpellCard;
 import com.chillizardinteractive.modelo.cardFactory.WeaponCard;
 
 public class CardHtmlGenerator {
