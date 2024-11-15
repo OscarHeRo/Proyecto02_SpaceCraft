@@ -1,8 +1,9 @@
 package com.chillizardinteractive.modelo.board;
 
-import com.chillizardinteractive.modelo.Player;
-import com.chillizardinteractive.modelo.cardFactory.MinionCard;
-import com.chillizardinteractive.modelo.cardFactory.SpellCard;
+import com.chillizardinteractive.modelo.card.Card;
+import com.chillizardinteractive.modelo.card.MinionCard;
+import com.chillizardinteractive.modelo.card.SpellCard;
+import com.chillizardinteractive.modelo.player.Player;
 
 public class Board {
     private MinionCard[] minionSpaces;
@@ -41,11 +42,11 @@ public class Board {
         StringBuilder sb = new StringBuilder();
         sb.append("[Minions]\n");
         for (int i = 0; i < minionSpaces.length; i++) {
-            sb.append((i + 1) + "._ " + (minionSpaces[i] == null ? "vacio" : minionSpaces[i].getDescripcion()) + "\n");
+            sb.append((i + 1) + "._ " + (minionSpaces[i] == null ? "vacio" : minionSpaces[i].getDescription()) + "\n");
         }
         sb.append("\n[SpellCards]\n");
         for (int i = 0; i < spellSpaces.length; i++) {
-            sb.append((i + 1) + "._ " + (spellSpaces[i] == null ? "vacio" : spellSpaces[i].getDescripcion()) + "\n");
+            sb.append((i + 1) + "._ " + (spellSpaces[i] == null ? "vacio" : spellSpaces[i].getDescription()) + "\n");
         }
         return sb.toString();
     }

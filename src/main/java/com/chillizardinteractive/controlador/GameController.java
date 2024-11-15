@@ -1,10 +1,12 @@
 package com.chillizardinteractive.controlador;
 
-import com.chillizardinteractive.modelo.Player;
 import com.chillizardinteractive.modelo.board.Board;
-import com.chillizardinteractive.modelo.cardFactory.Card;
-import com.chillizardinteractive.modelo.cardFactory.MinionCard;
-import com.chillizardinteractive.modelo.cardFactory.SpellCard;
+import com.chillizardinteractive.modelo.card.Card;
+import com.chillizardinteractive.modelo.card.MinionCard;
+import com.chillizardinteractive.modelo.card.SpellCard;
+import com.chillizardinteractive.modelo.gameState.GameContext;
+import com.chillizardinteractive.modelo.gameState.TerminarJuego;
+import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.vista.GameView;
 
 import java.util.Scanner;
