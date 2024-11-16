@@ -1,37 +1,14 @@
 package com.chillizardinteractive.modelo.cardFactory;
-import org.json.simple.JSONObject;
 
+import org.json.simple.JSONObject;
 import com.chillizardinteractive.modelo.Rareza;
 
 public class WeaponCard extends Card {
     private int attack;
     private int durability;
 
-<<<<<<< Updated upstream
-    public WeaponCard(String name, int cost, Rareza rarity, String description, int attack, int durability) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
-        super(name, cost, rarity, description);
-=======
-    public WeaponCard(String name, int cost, Rareza rareza, String description, int attack, int durability) {
-        super( name,  description,  cost,  rareza);
->>>>>>> Stashed changes
-<<<<<<< HEAD
-=======
-        super(name, cost, rarity, description,);
->>>>>>> parent of 15f8f8f (Más errores arreglados)
-=======
-        super(name, cost, rarity, description,);
->>>>>>> parent of 15f8f8f (Más errores arreglados)
-=======
-        super(name, cost, rarity, description,);
->>>>>>> parent of 15f8f8f (Más errores arreglados)
-=======
->>>>>>> parent of dd32a03 (Merge branch 'nueva_rama_estructura_mvc' of https://github.com/OscarHeRo/Proyecto02_SpaceCraft into nueva_rama_estructura_mvc)
+    public WeaponCard(String nombre, String descripcion, int costoMana, int attack, int durability, Rareza rareza) {
+        super(nombre, descripcion, costoMana, rareza);
         this.attack = attack;
         this.durability = durability;
     }
@@ -39,22 +16,30 @@ public class WeaponCard extends Card {
     public static WeaponCard fromJson(JSONObject json) {
         return new WeaponCard(
             (String) json.get("name"),
-            ((Long) json.get("cost")).intValue(),
-            Rareza.valueOf(((String) json.get("rarity")).toUpperCase()),
             (String) json.getOrDefault("description", ""),
+            ((Long) json.get("cost")).intValue(),
             ((Long) json.get("attack")).intValue(),
-            ((Long) json.get("durability")).intValue()
+            ((Long) json.get("durability")).intValue(),
+            Rareza.valueOf(((String) json.get("rarity")).toUpperCase())
         );
-    }
-
-    // Métodos específicos para WeaponCard
-
-    public int getAttack() {
-        return attack;
     }
 
     @Override
     public String getTipo() {
         return "Arma";
     }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public int getDurability() {
+        return durability;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " (Ataque: " + attack + ", Durabilidad: " + durability + ")";
+    }
+
 }
