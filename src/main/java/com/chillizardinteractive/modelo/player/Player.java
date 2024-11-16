@@ -20,6 +20,7 @@ public class Player {
         this.nenSpaces = 1;
         this.nenPoints = 1;
         this.mano = new Mano();
+<<<<<<< HEAD
     }
 
     public Player(String name, Hunter hunter) {
@@ -31,6 +32,11 @@ public class Player {
         this.mano = new Mano();
     }
 
+=======
+        this.deck = new Deck(name + "'s Deck");
+    }
+
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
     public String getName() {
         return name;
     }
@@ -73,6 +79,7 @@ public class Player {
             mano.agregarCartasMano(carta);
         }
     }
+<<<<<<< HEAD
 
     public void incrementarNenSpaces() {
         nenSpaces++;
@@ -99,3 +106,6 @@ public class Player {
         this.listo = true;
     }
 }
+=======
+}
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)

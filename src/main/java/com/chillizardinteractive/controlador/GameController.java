@@ -4,6 +4,7 @@ import com.chillizardinteractive.modelo.gameState.GameContext;
 import com.chillizardinteractive.modelo.player.Player;
 import com.chillizardinteractive.servidor.ServidorJuego;
 
+<<<<<<< HEAD
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -12,12 +13,25 @@ public class GameController {
     private GameContext context;
     private ScheduledExecutorService scheduler;
     private ServidorJuego servidor; // Referencia al servidor para enviar mensajes a los jugadores
+=======
+import java.util.Scanner;
+
+public class GameController {
+    private GameContext context;
+    private GameView view;
+    private Scanner scanner;
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
 
     // Constructor actualizado para incluir la referencia al servidor
     public GameController(GameContext context, ServidorJuego servidor) {
         this.context = context;
+<<<<<<< HEAD
         this.servidor = servidor;
         this.scheduler = Executors.newScheduledThreadPool(1);
+=======
+        this.view = view;
+        this.scanner = new Scanner(System.in);
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
     }
 
     public void procesarJugadorListo() {
@@ -46,7 +60,6 @@ public class GameController {
         servidor.enviarMensajeAlJugador(currentPlayer, "Iniciando turno del jugador actual...");
         
         context.iniciarTurno();
-        startTurnTimer();
     }
 
     private void startTurnTimer() {
@@ -70,6 +83,7 @@ public class GameController {
 
     // Método añadido para finalizar el juego
     public void finalizarJuego() {
+<<<<<<< HEAD
         System.out.println("El juego ha terminado.");
         if (scheduler != null && !scheduler.isShutdown()) {
             scheduler.shutdown();
@@ -83,6 +97,10 @@ public class GameController {
                 .filter(p -> p.getName().equals(jugador))
                 .findFirst()
                 .orElse(null);
+=======
+        context.finalizarJuego();
+    }
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
 
 <<<<<<< HEAD
         if (player == null) {
@@ -109,6 +127,7 @@ public class GameController {
     }
 
     public void colocarCartaEnTablero(Player player, Board board) {
+<<<<<<< HEAD
         if (player.getMano().getCartasEnMano().isEmpty()) {
             view.mostrarError("La mano está vacía. No se puede colocar ninguna carta en el tablero.");
 >>>>>>> parent of a83ede4 (comit1)
@@ -139,3 +158,32 @@ public class GameController {
         }
     }
 }
+=======
+        mostrarMano(player);
+        view.mostrarMensaje("Seleccione una carta para colocar en el tablero (1-" + player.getMano().toString() + "): ");
+        int cartaIndex = scanner.nextInt() - 1;
+        Card cartaSeleccionada = player.getMano().get(cartaIndex);
+        if (cartaSeleccionada instanceof MinionCard) {
+            view.mostrarMensaje("Seleccione una posición para el minion (1-5): ");
+            int posicion = scanner.nextInt() - 1;
+            if (board.placeMinion((MinionCard) cartaSeleccionada, posicion)) {
+                view.mostrarMensaje("Minion colocado en la posición " + (posicion + 1));
+                player.getMano().remove(cartaSeleccionada);
+            } else {
+                view.mostrarError("Posición inválida o ya ocupada.");
+            }
+        } else if (cartaSeleccionada instanceof SpellCard) {
+            view.mostrarMensaje("Seleccione una posición para el hechizo (1-5): ");
+            int posicion = scanner.nextInt() - 1;
+            if (board.placeSpell((SpellCard) cartaSeleccionada, posicion)) {
+                view.mostrarMensaje("Hechizo colocado en la posición " + (posicion + 1));
+                player.getMano().remove(cartaSeleccionada);
+            } else {
+                view.mostrarError("Posición inválida o ya ocupada.");
+            }
+        } else {
+            view.mostrarError("Carta no válida.");
+        }
+    }
+}
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)

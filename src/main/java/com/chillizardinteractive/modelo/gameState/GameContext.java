@@ -24,6 +24,7 @@ public class GameContext {
         this.player2 = player2;
         this.view = view;
         this.players = new ArrayList<>();
+<<<<<<< HEAD
         
         if (player1 != null) {
             this.players.add(player1);
@@ -34,6 +35,12 @@ public class GameContext {
 
         this.currentPlayer = player1; // Por defecto, el primer jugador es el que comienza.
         this.board = new Board();
+=======
+        this.players.add(player1);
+        this.players.add(player2);
+        this.currentPlayer = player1; // Asegúrate de inicializar currentPlayer
+        this.board = new Board(); // Asegúrate de inicializar board
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
     }
 
     // Constructor adicional que acepta una lista dinámica de jugadores
@@ -125,18 +132,24 @@ public class GameContext {
         return player1;
     }
 
+<<<<<<< HEAD
     public void setPlayer1(Player player1) {
         this.player1 = player1;
     }
 
+=======
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
     public Player getPlayer2() {
         return player2;
     }
 
+<<<<<<< HEAD
     public void setPlayer2(Player player2) {
         this.player2 = player2;
     }
 
+=======
+>>>>>>> parent of d243832 (terminamos flujo de juego porfin)
     public void setCurrentPlayer(Player player) {
         this.currentPlayer = player;
     }
