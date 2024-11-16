@@ -1,4 +1,4 @@
-package com.chillizardinteractive.controllador;
+package com.chillizardinteractive.controlador;
 
 import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.servidor.ServidorSocket;
