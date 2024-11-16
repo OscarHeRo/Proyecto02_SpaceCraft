@@ -84,8 +84,34 @@ public class GameController {
                 .findFirst()
                 .orElse(null);
 
+<<<<<<< HEAD
         if (player == null) {
             System.out.println("Jugador no encontrado: " + jugador);
+=======
+    public void mostrarEstadoJugador(String nombre, int vida, int nenSpaces, int nenPoints) {
+        view.mostrarEstadoJugador(nombre, vida, nenSpaces, nenPoints);
+    }
+
+    public void mostrarCartaRobada(String nombreJugador, String descripcionCarta) {
+        view.mostrarCartaRobada(nombreJugador, descripcionCarta);
+    }
+
+    public void mostrarMensaje(String mensaje) {
+        view.mostrarMensaje(mensaje);
+    }
+
+    public void mostrarError(String mensaje) {
+        view.mostrarError(mensaje);
+    }
+
+    public void mostrarMano(Player player) {
+        view.mostrarMensaje("Mano de " + player.getName() + ": " + player.getMano().toString());
+    }
+
+    public void colocarCartaEnTablero(Player player, Board board) {
+        if (player.getMano().getCartasEnMano().isEmpty()) {
+            view.mostrarError("La mano está vacía. No se puede colocar ninguna carta en el tablero.");
+>>>>>>> parent of a83ede4 (comit1)
             return;
         }
 
