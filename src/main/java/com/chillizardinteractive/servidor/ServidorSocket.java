@@ -6,9 +6,11 @@ import java.net.*;
 public class ServidorSocket {
     private int port;
     private ServerSocket serverSocket;
+    private ServerController serverController;
 
-    public ServidorSocket(int port) {
+    public ServidorSocket(int port, ServerController serverController) {
         this.port = port;
+        this.serverController = serverController;
         try {
             this.serverSocket = new ServerSocket(port);
             System.out.println("Servidor iniciado en el puerto: " + port);
@@ -24,7 +26,7 @@ public class ServidorSocket {
                 System.out.println("Cliente conectado: " + socket.getInetAddress());
 
                 // Crear un nuevo hilo para gestionar cada cliente de manera independiente
-                new Thread(new ClienteHandler(socket)).start();
+                new Thread(new ClienteHandler(socket, serverController)).start();
             }
         } catch (IOException e) {
             System.err.println("Error al esperar conexión: " + e.getMessage());
@@ -40,14 +42,20 @@ public class ServidorSocket {
             System.err.println("Error al cerrar la conexión del servidor: " + e.getMessage());
         }
     }
+
+    public int getPort() {
+        return port;
+    }
 }
 
 // Clase ClienteHandler para gestionar las conexiones con los clientes
 class ClienteHandler implements Runnable {
     private Socket socket;
+    private ServerController serverController;
 
-    public ClienteHandler(Socket socket) {
+    public ClienteHandler(Socket socket, ServerController serverController) {
         this.socket = socket;
+        this.serverController = serverController;
     }
 
     @Override
@@ -58,7 +66,7 @@ class ClienteHandler implements Runnable {
             String mensaje;
             while ((mensaje = input.readLine()) != null) {
                 System.out.println("Mensaje recibido: " + mensaje);
-                output.println("Respuesta del servidor: " + mensaje);
+                serverController.procesarMensajeCliente(mensaje, output);
             }
         } catch (IOException e) {
             System.err.println("Error en la conexión con el cliente: " + e.getMessage());

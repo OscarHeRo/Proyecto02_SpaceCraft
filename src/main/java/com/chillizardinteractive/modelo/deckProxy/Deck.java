@@ -6,14 +6,16 @@ import org.json.simple.parser.JSONParser;
 
 import com.chillizardinteractive.modelo.Rareza;
 import com.chillizardinteractive.modelo.Decorator.*;
-import com.chillizardinteractive.modelo.cardFactory.Card;
-import com.chillizardinteractive.modelo.cardFactory.CardFactory;
+import com.chillizardinteractive.modelo.factory.Card;
+import com.chillizardinteractive.modelo.factory.CardFactory;
 
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
+
+import com.chillizardinteractive.modelo.cardFactory.CardFactory;
 
 public class Deck {
     private String deckName;
@@ -58,7 +60,7 @@ public class Deck {
             String type = (String) cardJson.get("type");
             int attack = cardJson.containsKey("attack") ? ((Long) cardJson.get("attack")).intValue() : 0;
             int defense = cardJson.containsKey("defense") ? ((Long) cardJson.get("defense")).intValue() : 0;
-            Rareza rarity = Rareza.valueOf((String) cardJson.get("rarity"));
+            Rareza rarity = Rarity.valueOf((String) cardJson.get("rarity"));
             Card card = CardFactory.crearCarta(type, name, description, nenCost, attack, defense, rarity);
 
             String effect = (String) cardJson.get("effect");
@@ -101,7 +103,7 @@ public class Deck {
             if (card == null) {
                 System.out.println("Carta nula encontrada en el mazo.");
             } else {
-                System.out.println("- " + card.getDescripcion());
+                System.out.println("- " + card.getDescription());
             }
         }
     }
@@ -118,7 +120,7 @@ public class Deck {
 
         String deckString = "";
         for (Card card : cardStack) {
-            deckString += card.getDescripcion() + "\n";
+            deckString += card.getDescription() + "\n";
         }
         return deckString;
     }

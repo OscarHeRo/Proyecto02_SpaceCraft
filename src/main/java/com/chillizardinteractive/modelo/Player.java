@@ -23,6 +23,14 @@ public class Player {
         this.deck = deck;
     }
 
+    public void agregarCartaMano(Card carta) {
+        this.mano.agregarCartasMano(carta);
+    }
+    
+    public void getVida(int vida) {
+        this.vida = vida;
+    }
+
 
     public String getName() {
         return name;
@@ -57,7 +65,7 @@ public class Player {
     }
 
     public void robarCarta() {
-        Card carta = deck.sacarCarta();
+        Card carta = this.deck.sacarCarta();
         if (carta != null) {
             mano.agregarCartasMano(carta);
         }
@@ -71,5 +79,11 @@ public class Player {
 
     public void rellenarNenPoints() {
         this.nenPoints = nenSpaces;
+    }
+
+
+    public int getVida() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getVida'");
     }
 }
