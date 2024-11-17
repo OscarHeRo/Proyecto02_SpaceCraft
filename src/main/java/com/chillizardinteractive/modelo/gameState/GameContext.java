@@ -18,16 +18,62 @@ public class GameContext {
     private Board board;
     private GameView view;
 
-    // Constructor actualizado
-    public GameContext(Player player1, Player player2, GameView view) {
-        this.player1 = player1;
-        this.player2 = player2;
+    public GameContext(List<Player> players, GameView view) {
+        this.players = players;
         this.view = view;
-        this.players = new ArrayList<>();
-        if (player1 != null) this.players.add(player1);
-        if (player2 != null) this.players.add(player2);
-        this.currentPlayer = player1;
         this.board = new Board();
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void setCurrentPlayer(Player player) {
+        this.currentPlayer = player;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public void autorizarAtaque() {
+        this.permisoParaAtaque = true;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void switchPlayer() {
+        currentPlayer = (currentPlayer == player1) ? player2 : player1;
+    }
+
+    public Player getOpponentPlayer() {
+        return (currentPlayer == player1) ? player2 : player1;
+    }
+
+    public boolean todosLosJugadoresListos() {
+        return players.stream().allMatch(Player::estaListo);
+    }
+
+    public String getNumeroJugadoresListos() {
+        return players.stream().filter(Player::estaListo).count() + "/" + players.size();
     }
 
     public void iniciarJuego() {
@@ -106,70 +152,6 @@ public class GameContext {
 
     public void finalizarJuego() {
         view.mostrarMensajePublico("El juego ha terminado.");
-
         // Lógica para finalizar el juego
-    }
-
-    public Player getPlayer1() {
-        return player1;
-    }
-
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
-    }
-
-    public Player getPlayer2() {
-        return player2;
-    }
-
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
-    }
-
-    public void setCurrentPlayer(Player player) {
-        this.currentPlayer = player;
-    }
-
-    public Player getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    public List<Player> getPlayers() {
-        return players;
-    }
-
-    public void autorizarAtaque() {
-        this.permisoParaAtaque = true;
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public void switchPlayer() {
-        currentPlayer = (currentPlayer == player1) ? player2 : player1;
-    }
-
-    public Player getOpponentPlayer() {
-        return (currentPlayer == player1) ? player2 : player1;
-    }
-
-    public boolean todosLosJugadoresListos() {
-        for (Player player : players) {
-            if (!player.estaListo()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public String getNumeroJugadoresListos() {
-        int count = 0;
-        for (Player player : players) {
-            if (player.estaListo()) {
-                count++;
-            }
-        }
-        return String.valueOf(count);
     }
 }

@@ -1,26 +1,35 @@
 package com.chillizardinteractive.vista;
 
-public class GameView {
+import com.chillizardinteractive.servidor.ServidorJuego;
 
-    // Mostrar un mensaje que todos los jugadores deberían ver
-    public void mostrarMensajePublico(String mensaje) {
-        System.out.println("[Mensaje Público] " + mensaje);
+public class GameView {
+    private ServidorJuego servidorJuego;
+
+    public GameView(ServidorJuego servidorJuego) {
+        this.servidorJuego = servidorJuego;
     }
 
-    // Mostrar un mensaje específico para un jugador
-    public void mostrarMensajePrivado(String nombreJugador, String mensaje) {
-        System.out.println("[Mensaje Privado para " + nombreJugador + "]\n " + mensaje);
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
     }
 
     public void mostrarEstadoJugador(String nombre, int vida, int nenSpaces, int nenPoints) {
-        System.out.println(nombre + ": Vida = " + vida + ", Espacios de Nen = " + nenSpaces + ", Puntos de Nen = " + nenPoints);
+        servidorJuego.notificarMensajePublico(nombre + ": Vida = " + vida + ", Espacios de Nen = " + nenSpaces + ", Puntos de Nen = " + nenPoints);
     }
 
     public void mostrarCartaRobada(String nombreJugador, String descripcionCarta) {
-        mostrarMensajePrivado(nombreJugador, "Has robado la carta: " + descripcionCarta);
+        servidorJuego.notificarMensajePrivado(nombreJugador, nombreJugador + " ha robado la carta: " + descripcionCarta);
     }
 
     public void mostrarError(String mensaje) {
-        System.out.println("[Error] " + mensaje);
+        servidorJuego.notificarMensajePublico("Error: " + mensaje);
+    }
+
+    public void mostrarMensajePrivado(String nombreJugador, String mensaje) {
+        servidorJuego.notificarMensajePrivado(nombreJugador, mensaje);
+    }
+
+    public void mostrarMensajePublico(String mensaje) {
+        servidorJuego.notificarMensajePublico(mensaje);
     }
 }

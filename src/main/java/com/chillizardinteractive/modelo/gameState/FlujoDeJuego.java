@@ -21,8 +21,8 @@ public class FlujoDeJuego {
     public void iniciarJuego() {
         if (jugadores.size() == 2 && !juegoIniciado) {
             juegoIniciado = true;
-            context = new GameContext(jugadores.get(0), jugadores.get(1),this.view);
-            gameController = new GameController(context);
+            context = new GameContext(jugadores, this.view);
+            gameController = new GameController(context, this.view);
             gameController.iniciarJuego();
             gameController.lanzarMoneda();
             cicloDelJuego();

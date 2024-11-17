@@ -1,6 +1,5 @@
 package com.chillizardinteractive.servidor;
 
-import com.chillizardinteractive.broker.MessageBroker;
 import com.chillizardinteractive.controlador.GameController;
 import com.chillizardinteractive.controlador.PlayerController;
 import com.chillizardinteractive.modelo.gameState.GameContext;
@@ -15,23 +14,22 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ServidorJuego {
     private static final int PUERTO = 8080;
-    private List<PrintWriter> clientes = new CopyOnWriteArrayList<>(); // CopyOnWriteArrayList para evitar ConcurrentModificationException
+    private List<PrintWriter> clientes = new CopyOnWriteArrayList<>();
     private GameController gameController;
     private PlayerController playerController;
-    private MessageBroker messageBroker;
+    private GameContext context;
+    private GameView view;
 
     public static void main(String[] args) {
         new ServidorJuego().iniciarServidor();
     }
 
     public ServidorJuego() {
-        Player player1 = new Player("Jugador1");
-        Player player2 = new Player("Jugador2");
-        GameView view = new GameView();
-        GameContext context = new GameContext(player1, player2, view);
-        this.gameController = new GameController(context);
+        view = new GameView(this);
+        List<Player> jugadores = new ArrayList<>();
+        context = new GameContext(jugadores, view); // Usar una lista de jugadores dinámica
+        this.gameController = new GameController(context, view);
         this.playerController = new PlayerController(context.getPlayers(), gameController, view);
-        this.messageBroker = new MessageBroker(gameController, playerController);
     }
 
     public void iniciarServidor() {
@@ -70,13 +68,56 @@ public class ServidorJuego {
                 String inputLine;
                 while ((inputLine = in.readLine()) != null) {
                     System.out.println("Mensaje del cliente: " + inputLine);
-                    messageBroker.procesarMensaje(inputLine, out);
+                    procesarMensaje(inputLine, out);
                 }
             } catch (IOException e) {
                 System.out.println("Error en la conexión con el cliente: " + clientSocket.getInetAddress());
                 e.printStackTrace();
             } finally {
                 desconectarCliente();
+            }
+        }
+
+        private void procesarMensaje(String mensaje, PrintWriter out) {
+            String[] partes = mensaje.split(":");
+            String accion = partes[0];
+
+            switch (accion) {
+                case "nombre":
+                    if (partes.length == 2) {
+                        playerController.procesarNombre(partes[1], out);
+                    } else {
+                        out.println("Error: Formato incorrecto. Use nombre:jugadorNombre");
+                    }
+                    break;
+                case "hunter":
+                    if (partes.length == 3) {
+                        String nombreJugador = partes[1];
+                        int hunterNumber = Integer.parseInt(partes[2]);
+                        playerController.procesarHunter(nombreJugador, hunterNumber, out);
+                    } else {
+                        out.println("Error: Formato incorrecto. Use hunter:jugadorNombre:hunterNumber");
+                    }
+                    break;
+                case "listo":
+                    if (partes.length == 2) {
+                        String nombreJugador = partes[1];
+                        playerController.procesarListo(nombreJugador, out, gameController::iniciarJuego);
+                    } else {
+                        out.println("Error: Formato incorrecto. Use listo:jugadorNombre");
+                    }
+                    break;
+                case "movimiento":
+                    if (partes.length >= 3) {
+                        String jugador = partes[1];
+                        String accionMovimiento = partes[2];
+                        gameController.procesarMovimiento(jugador, accionMovimiento);
+                    } else {
+                        out.println("Error: Formato incorrecto. Use movimiento:jugador:accion");
+                    }
+                    break;
+                default:
+                    out.println("Error: Acción no reconocida.");
             }
         }
 
@@ -101,11 +142,32 @@ public class ServidorJuego {
             for (PrintWriter cliente : clientes) {
                 cliente.println("Un jugador se ha desconectado.");
             }
-            // Aquí podrías decidir si finalizar el juego o adaptar el flujo
             if (clientes.size() < 2) {
                 System.out.println("No hay suficientes jugadores para continuar. Finalizando el juego...");
                 gameController.finalizarJuego();
             }
         }
+    }
+
+    public void notificarInicioJuego() {
+        for (PrintWriter cliente : clientes) {
+            cliente.println("comenzar");
+        }
+    }
+
+    public void notificarMensajePrivado(String jugador, String mensaje) {
+        for (PrintWriter cliente : clientes) {
+            cliente.println("[Mensaje Privado para " + jugador + "] " + mensaje);
+        }
+    }
+
+    public void notificarMensajePublico(String mensaje) {
+        for (PrintWriter cliente : clientes) {
+            cliente.println("[Mensaje Público] " + mensaje);
+        }
+    }
+
+    public List<PrintWriter> getClientes() {
+        return clientes;
     }
 }

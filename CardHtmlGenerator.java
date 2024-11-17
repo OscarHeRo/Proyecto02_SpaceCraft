@@ -1,15 +1,15 @@
 package com.chillizardinteractive.vista;
 
+import com.chillizardinteractive.modelo.card.Card;
+import com.chillizardinteractive.modelo.card.MinionCard;
+import com.chillizardinteractive.modelo.card.SpellCard;
+import com.chillizardinteractive.modelo.card.WeaponCard;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-
-import com.chillizardinteractive.modelo.card.Card;
-import com.chillizardinteractive.modelo.card.MinionCard;
-import com.chillizardinteractive.modelo.card.SpellCard;
-import com.chillizardinteractive.modelo.card.WeaponCard;
 
 public class CardHtmlGenerator {
 
@@ -34,7 +34,7 @@ public class CardHtmlGenerator {
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputPath))) {
                 writer.write(template);
-                //System.out.println("Archivo HTML generado: " + outputPath);
+                System.out.println("Archivo HTML generado: " + outputPath);
             }
         } catch (IOException e) {
             e.printStackTrace();
